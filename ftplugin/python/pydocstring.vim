@@ -5,18 +5,15 @@
 " Description: Generate Python docstring to your Python script file.
 " License: BSD, see LICENSE for more details.
 
-if exists('g:loaded_pydocstring')
-  finish
-endif
-let g:loaded_pydocstring = 1
-
 let s:save_cpo = &cpo
 set cpo&vim
 
-command! -nargs=0 -complete=customlist,pydocstring#insert Pydocstring call pydocstring#insert()
+command! -nargs=0 -buffer -complete=customlist,pydocstring#insert Pydocstring call pydocstring#insert()
 
-nnoremap <silent> <Plug>(pydocstring) :call pydocstring#insert()<CR>
-nmap <silent> <C-l> <Plug>(pydocstring)
+nnoremap <silent> <buffer> <Plug>(pydocstring) :call pydocstring#insert()<CR>
+if !hasmapto('<Plug>(pydocstring)')
+  nmap <silent> <unique> <C-l> <Plug>(pydocstring)
+endif
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

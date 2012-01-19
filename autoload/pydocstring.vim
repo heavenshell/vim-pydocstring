@@ -75,7 +75,6 @@ function! s:builddocstring(strs, indent)
   let prefix = a:strs['header']
   let args = a:strs['args']
   let tmpl = ''
-  echomsg type
   if len(args) > 0 && type == 'def'
     let docstrings = []
     let lines = s:readtmpl('multi')
