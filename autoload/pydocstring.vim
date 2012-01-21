@@ -33,23 +33,17 @@ endfunction
 function! s:parse(line)
   let str = substitute(a:line, '\\', '', 'g')
   let type = ''
-  if str =~ '^def\s'
-    let str = substitute(str, '^def\s', '', '')
+  if str =~ '^def\s\|^\s*def\s'
+    let str = substitute(str, '^def\s\|^\s*def\s', '', '')
     let type = 'def'
-  elseif str =~ '^\s*def\s'
-    let str = substitute(str, '^\s*def\s', '', '')
-    let type = 'def'
-  elseif str =~ '^class\s'
-    let str = substitute(str, '^class\s', '', '')
-    let type = 'class'
-  elseif str =~ '^\s*class\s'
-    let str = substitute(str, '^\s*class\s', '', '')
+  elseif str =~ '^class\s\|^\s*class\s'
+    let str = substitute(str, '^class\s\|^\s*class\s', '', '')
     let type = 'class'
   else
     return 0
   endif
-  let str = substitute(str, '\s', '', 'g')
-  let str = substitute(str, '):', '', 'g')
+  let str = substitute(str, '\s\|):', '', 'g')
+
   let strs = split(str, '(')
   let header = strs[0]
   let args = []
