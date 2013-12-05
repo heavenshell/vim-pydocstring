@@ -93,7 +93,7 @@ function! s:builddocstring(strs, indent)
           if arg =~ g:pydocstring_ignore_args_pattern
             continue
           endif
-          let arg = substitute(line, '{{_arg_}}', arg, '')
+          let arg = substitute(line, '{{_arg_}}', arg, 'g')
           let arg = substitute(arg, '{{_lf_}}', "\n", '')
           let arg = substitute(arg, '{{_indent_}}', a:indent, 'g')
           call add(docstrings, a:indent . arg)
