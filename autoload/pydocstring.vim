@@ -9,7 +9,7 @@ set cpo&vim
 
 " Path to docstring template.
 if exists('g:pydocstring_templates_dir')
-  let s:tmpldir = g:pydocstring_template_dir
+  let s:tmpldir = g:pydocstring_templates_dir
 else
   let s:tmpldir = expand('<sfile>:p:h:h') . '/template/pydocstring/'
 endif
