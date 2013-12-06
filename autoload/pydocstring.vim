@@ -1,5 +1,5 @@
 " Insert Docstring.
-" Last Change:  2012-01-14
+" Last Change:  2013-12-06
 " Maintainer:   Shinya Ohyanagi <sohyanagi@gmail.com>
 " License:      This file is placed in the public domain.
 " NOTE:         This module is heavily inspired by php-doc.vim and
