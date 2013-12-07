@@ -98,6 +98,9 @@ function! s:builddocstring(strs, indent)
           let arg = substitute(arg, '{{_indent_}}', a:indent, 'g')
           call add(docstrings, a:indent . arg)
         endfor
+      elseif line =~ '{{_indent_}}'
+        let arg = substitute(line, '{{_indent_}}', a:indent, 'g')
+        call add(docstrings, arg)
       elseif line =~ '{{_args_}}'
         if len(args) == 0
           let tmpl = s:readoneline(a:indent, prefix)
