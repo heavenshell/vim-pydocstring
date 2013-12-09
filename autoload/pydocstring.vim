@@ -154,9 +154,9 @@ function! pydocstring#insert()
     endif
   else
     if len(indent) == 0
-      let indent = "\t"
+      let indent = repeat(' ', &softtabstop)
     else
-      let indent = indent . "\t"
+      let indent = indent . repeat(' ', &softtabstop)
     endif
     try
       let result = s:builddocstring(docstring, indent)
