@@ -1,6 +1,6 @@
 *pydocstring.txt*	Generate Python docstring to your Python code.
 
-Version: 0.0.1
+Version: 0.0.2
 Author: Shinya Ohynagi <sohyanagi@gmail.com>
 Repository: http://github.com/heavenshell/vim-pydocstring/
 License: BSD, see LICENSE for more details.
@@ -13,6 +13,7 @@ Install			|pydocstring-install|
 Tutorial		|pydocstring-tutorial|
 Template		|pydocstring-template|
 Variables		|pydocstring-variables|
+Example			||pydocstring-example|
 
 ==============================================================================
 INTRODUCTION					*pydocstring-vim-introduction*
@@ -134,7 +135,10 @@ If you don't like default docstring, You can modify docstring template.
 
 Template variables.
   |{{_header_}}|	Class, function or method name as a value.
-  |{{_args_}}|	Assign function or method's argumens.
+  |{{_args_}}|	Assign function or method's arguments.
+  |{{_arg_}}|	Assign function or method's argument.
+  |{{_ln_}}|	Assign line break.
+  |{{_indent_}}|	Assign indent.
 
 ==============================================================================
 VARIABLES					*pydocstring-vim-variables*
@@ -156,6 +160,34 @@ g:pydocstring_enable_comment			*g:pydocstring_enable_comment*
 		g:pydocstring_enable_comment enable to put comment.txt value.
 
 		Default value is '1'
+
+==============================================================================
+EXAMPLE						*pydocstring-vim-example*
+
+Numpy style docstring template example.
+
+  Add following template to multi.txt
+>
+    """{{_header_}}
+
+    {{_arg_}} :{{_lf_}}{{_indent_}}    {{_arg_}} is
+    """
+<
+  Set cursor on `def arg1` line and type following.
+>
+    :Pydocstring
+<
+  Then docstring put under `def` line.
+>
+  def foo(arg1, arg2):
+    """foo
+
+    arg1:
+        arg1 is
+    arg2:
+        arg2 is
+    """
+    pass
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:fdl=0:

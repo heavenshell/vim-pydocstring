@@ -1,5 +1,5 @@
 " Insert Docstring.
-" Last Change:  2012-01-14
+" Last Change:  2013-12-06
 " Maintainer:   Shinya Ohyanagi <sohyanagi@gmail.com>
 " License:      This file is placed in the public domain.
 " NOTE:         This module is heavily inspired by php-doc.vim and
@@ -76,6 +76,31 @@ function! s:builddocstring(strs, indent)
       if line =~ '{{_header_}}'
         let header = substitute(line, '{{_header_}}', prefix, '')
         call add(docstrings, a:indent . header)
+      elseif line =~ '{{_arg_}}'
+        if len(args) == 0
+          let tmpl = s:readoneline(a:indent, prefix)
+          return tmpl
+        endif
+
+        if args[0] =~ g:pydocstring_ignore_args_pattern && len(args) == 1
+          let tmpl = s:readoneline(a:indent, prefix)
+          return tmpl
+        endif
+
+        let arglist = []
+        for arg in args
+          let arg = substitute(arg, '=.*$', '', '')
+          if arg =~ g:pydocstring_ignore_args_pattern
+            continue
+          endif
+          let arg = substitute(line, '{{_arg_}}', arg, 'g')
+          let arg = substitute(arg, '{{_lf_}}', "\n", '')
+          let arg = substitute(arg, '{{_indent_}}', a:indent, 'g')
+          call add(docstrings, a:indent . arg)
+        endfor
+      elseif line =~ '{{_indent_}}'
+        let arg = substitute(line, '{{_indent_}}', a:indent, 'g')
+        call add(docstrings, arg)
       elseif line =~ '{{_args_}}'
         if len(args) == 0
           let tmpl = s:readoneline(a:indent, prefix)
@@ -129,9 +154,9 @@ function! pydocstring#insert()
     endif
   else
     if len(indent) == 0
-      let indent = "\t"
+      let indent = repeat(' ', &softtabstop)
     else
-      let indent = indent . "\t"
+      let indent = indent . repeat(' ', &softtabstop)
     endif
     try
       let result = s:builddocstring(docstring, indent)
