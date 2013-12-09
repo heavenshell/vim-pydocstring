@@ -42,7 +42,7 @@ function! s:parse(line)
   else
     return 0
   endif
-  let str = substitute(str, '\s\|):', '', 'g')
+  let str = substitute(str, '\s\|):\|)\s:', '', 'g')
 
   let strs = split(str, '(')
   let header = strs[0]
