@@ -1,5 +1,5 @@
 " Insert Docstring.
-" Last Change:  2013-12-06
+" Last Change:  2013-12-14
 " Maintainer:   Shinya Ohyanagi <sohyanagi@gmail.com>
 " License:      This file is placed in the public domain.
 " NOTE:         This module is heavily inspired by php-doc.vim and
@@ -173,10 +173,14 @@ endfunction
 function! s:insert(pos, docstring)
   let paste = &g:paste
   let &g:paste = 1
-
   silent! execute 'normal! ' . a:pos . 'G$'
-  silent! execute 'normal! O' . a:docstring
-
+  let currentpos = line('.')
+  " If current position is bottom, add docstring below.
+  if a:pos == currentpos
+    silent! execute 'normal! O' . a:docstring
+  else
+    silent! execute 'normal! o' . a:docstring
+  endif
   let &g:paste = paste
 endfunction
 
