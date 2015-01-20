@@ -19,5 +19,5 @@ This plugin is heavily inspired by phpdoc.vim and sonictemplate.vim.
 Usage
 
   1. Move your cursor on a `def` or `class` keyword line,
-  1. type :Pydocstring or enter <C-l> (default keymapping)
+  1. type `:Pydocstring` or enter `<C-l>` (default keymapping) and
   1. watch a docstring template magically appear below the current line
