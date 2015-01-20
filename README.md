@@ -9,11 +9,9 @@ Pydocstring is a generator for Python docstrings and is capable of automatically
 
 This plugin is heavily inspired by phpdoc.vim and sonictemplate.vim.
 
-* phpdoc.vim
-  http://www.vim.org/scripts/script.php?script_id=1355
+* [phpdoc.vim](http://www.vim.org/scripts/script.php?script_id=1355)
 
-* sonictemplate.vim
-  https://github.com/mattn/sonictemplate-vim
+* [sonictemplate.vim](https://github.com/mattn/sonictemplate-vim)
 
 
 Usage
