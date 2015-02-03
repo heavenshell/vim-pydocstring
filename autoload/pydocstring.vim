@@ -94,7 +94,7 @@ function! s:builddocstring(strs, indent)
             continue
           endif
           let arg = substitute(line, '{{_arg_}}', arg, 'g')
-          let arg = substitute(arg, '{{_lf_}}', "\n", '')
+          let arg = substitute(arg, '{{_lf_}}', "\n" . a:indent, '')
           let arg = substitute(arg, '{{_indent_}}', a:indent, 'g')
           call add(docstrings, a:indent . arg)
         endfor
@@ -121,10 +121,8 @@ function! s:builddocstring(strs, indent)
           let arg = substitute(line, '{{_args_}}', arg, '')
           call add(docstrings, a:indent . arg)
         endfor
-      elseif line == '"""'
-        call add(docstrings, a:indent . line)
       else
-        call add(docstrings, line)
+        call add(docstrings, a:indent . line)
       endif
     endfor
     let tmpl = substitute(join(docstrings, "\n"), "\n$", '', '')
