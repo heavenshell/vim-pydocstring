@@ -73,7 +73,7 @@ function! s:builddocstring(strs, indent)
     let docstrings = []
     let lines = s:readtmpl('multi')
     for line in lines
-      let line = repeat(' ', %shiftwidth, '') . line
+      let a:indent = repeat(' ', %shiftwidth, '') . a:indent 
       if line =~ '{{_header_}}'
         let header = substitute(line, '{{_header_}}', prefix, '')
         call add(docstrings, a:indent . header)
