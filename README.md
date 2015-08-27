@@ -19,6 +19,9 @@ Usage
 Settings
 --------
 Pydocstring depends on `softtabstop`.
+You need to set like `set softtabstop=4`.
+
+Example `.vimrc`
 
 ```viml
 autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
