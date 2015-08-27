@@ -10,7 +10,25 @@ Pydocstring is a generator for Python docstrings and is capable of automatically
 This plugin is heavily inspired by [phpdoc.vim](http://www.vim.org/scripts/script.php?script_id=1355) and [sonictemplate.vim](https://github.com/mattn/sonictemplate-vim).
 
 Usage
+-----
 
   1. Move your cursor on a `def` or `class` keyword line,
   1. type `:Pydocstring` or enter `<C-l>` (default keymapping) and
   1. watch a docstring template magically appear below the current line
+
+Settings
+--------
+Pydocstring need depends on `softtabstop`.
+
+```viml
+autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+```
+
+Key map
+-------
+
+If you want change default keymapping, set following to your `.vimrc`.
+
+```viml
+nmap <silent> <C-_> <Plug>(pydocstring)
+```
