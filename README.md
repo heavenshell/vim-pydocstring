@@ -18,7 +18,7 @@ Usage
 
 Settings
 --------
-Pydocstring need depends on `softtabstop`.
+Pydocstring depends on `softtabstop`.
 
 ```viml
 autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
