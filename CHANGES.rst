@@ -1,3 +1,10 @@
+Version 0.0.4
+-------------
+Released on September 14th 2015
+
+- Enable to use ``async`` keyword
+
+
 Version 0.0.3
 -------------
 

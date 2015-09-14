@@ -1,9 +1,12 @@
 " Insert Docstring.
-" Last Change:  2013-12-14
-" Maintainer:   Shinya Ohyanagi <sohyanagi@gmail.com>
-" License:      This file is placed in the public domain.
-" NOTE:         This module is heavily inspired by php-doc.vim and
-"               sonictemplate.vim
+" Author:      Shinya Ohyanagi <sohyanagi@gmail.com>
+" Version:     0.0.4
+" License:     This file is placed in the public domain.
+" WebPage:     http://github.com/heavenshell/vim-pydocstriong/
+" Description: Generate Python docstring to your Python script file.
+" License:     BSD, see LICENSE for more details.
+" NOTE:        This module is heavily inspired by php-doc.vim and
+"              sonictemplate.vim
 let s:save_cpo = &cpo
 set cpo&vim
 
@@ -35,6 +38,9 @@ function! s:parse(line)
   let type = ''
   if str =~ '^def\s\|^\s*def\s'
     let str = substitute(str, '^def\s\|^\s*def\s', '', '')
+    let type = 'def'
+  elseif str =~ '^async\s*def\s\|^\s*async\sdef\s'
+    let str = substitute(str, '^async\sdef\s\|^\s*async\sdef\s', '', '')
     let type = 'def'
   elseif str =~ '^class\s\|^\s*class\s'
     let str = substitute(str, '^class\s\|^\s*class\s', '', '')
