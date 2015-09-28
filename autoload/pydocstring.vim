@@ -1,6 +1,6 @@
 " Insert Docstring.
 " Author:      Shinya Ohyanagi <sohyanagi@gmail.com>
-" Version:     0.0.4
+" Version:     0.0.5
 " License:     This file is placed in the public domain.
 " WebPage:     http://github.com/heavenshell/vim-pydocstriong/
 " Description: Generate Python docstring to your Python script file.
@@ -24,6 +24,12 @@ if !exists('g:pydocstring_ignore_args_pattern')
   let g:pydocstring_ignore_args_pattern = 'self\|cls'
 endif
 
+let s:regexs = {
+\ 'def': '^def\s\|^\s*def\s',
+\ 'class': '^class\s\|^\s*class\s',
+\ 'async': '^async\s*def\s\|^\s*async\sdef\s'
+\ }
+
 function! s:readtmpl(type)
   let path = s:tmpldir . a:type . '.txt'
   if !filereadable(path)
@@ -36,14 +42,14 @@ endfunction
 function! s:parse(line)
   let str = substitute(a:line, '\\', '', 'g')
   let type = ''
-  if str =~ '^def\s\|^\s*def\s'
-    let str = substitute(str, '^def\s\|^\s*def\s', '', '')
+  if str =~ s:regexs['def']
+    let str = substitute(str, s:regexs['def'], '', '')
     let type = 'def'
-  elseif str =~ '^async\s*def\s\|^\s*async\sdef\s'
-    let str = substitute(str, '^async\sdef\s\|^\s*async\sdef\s', '', '')
+  elseif str =~ s:regexs['async']
+    let str = substitute(str, s:regexs['async'], '', '')
     let type = 'def'
-  elseif str =~ '^class\s\|^\s*class\s'
-    let str = substitute(str, '^class\s\|^\s*class\s', '', '')
+  elseif str =~ s:regexs['class']
+    let str = substitute(str, s:regexs['class'], '', '')
     let type = 'class'
   else
     return 0

@@ -1,3 +1,9 @@
+Version 0.0.5
+-------------
+Released on September 28th 2015
+
+- Tiny refactoring.
+
 Version 0.0.4
 -------------
 Released on September 14th 2015
