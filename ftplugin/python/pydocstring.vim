@@ -10,9 +10,15 @@ set cpo&vim
 
 command! -nargs=0 -buffer -complete=customlist,pydocstring#insert Pydocstring call pydocstring#insert()
 
-nnoremap <silent> <buffer> <Plug>(pydocstring) :call pydocstring#insert()<CR>
-if !hasmapto('<Plug>(pydocstring)')
-  nmap <silent> <C-l> <Plug>(pydocstring)
+if !exists('g:pydocstring_enable_mapping')
+  let g:pydocstring_enable_mapping = 1
+endif
+
+if g:pydocstring_enable_mapping == 1 || hasmapto('<Plug>(pydocstring)')
+  nnoremap <silent> <buffer> <Plug>(pydocstring) :call pydocstring#insert()<CR>
+  if !hasmapto('<Plug>(pydocstring)')
+    nmap <silent> <C-l> <Plug>(pydocstring)
+  endif
 endif
 
 let &cpo = s:save_cpo

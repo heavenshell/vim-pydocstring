@@ -161,6 +161,16 @@ g:pydocstring_enable_comment			*g:pydocstring_enable_comment*
 
 		Default value is '1'
 
+g:pydocstring_enable_mapping			*g:pydocstring_enable_mapping*
+		Disable this option to prevent pydocstring from creating any
+		key mapping to the `:Pydocstring` command.
+		Note: this value is overridden if you explicitly create a
+		mapping in your vimrc, such as if you do:
+
+    nmap <silent> <C-m> <Plug>(pydocstring)
+
+		Default value is '1'
+
 ==============================================================================
 EXAMPLE						*pydocstring-vim-example*
 
@@ -195,6 +205,10 @@ Override default mapping.
   Following setting map <C-m> to generate docstring.
 
     nmap <silent> <C-m> <Plug>(pydocstring)
+
+  To disable mappings entirely, add the following to your .vimrc or _vimrc.
+
+    let g:pydocstring_enable_mapping = 0
 
 
 ==============================================================================
