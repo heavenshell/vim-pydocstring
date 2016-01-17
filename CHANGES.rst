@@ -1,3 +1,10 @@
+Version 0.0.6
+-------------
+Released on January 17th 2016
+
+- add ``pydocstring_enable_mapping`` option.
+  Thx @nfischer
+
 Version 0.0.5
 -------------
 Released on September 28th 2015

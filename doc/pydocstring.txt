@@ -1,6 +1,6 @@
 *pydocstring.txt*	Generate Python docstring to your Python code.
 
-Version: 0.0.5
+Version: 0.0.6
 Author: Shinya Ohynagi <sohyanagi@gmail.com>
 Repository: http://github.com/heavenshell/vim-pydocstring/
 License: BSD, see LICENSE for more details.
