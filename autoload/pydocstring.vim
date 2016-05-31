@@ -1,6 +1,6 @@
 " Insert Docstring.
 " Author:      Shinya Ohyanagi <sohyanagi@gmail.com>
-" Version:     0.0.6
+" Version:     0.0.7
 " License:     This file is placed in the public domain.
 " WebPage:     http://github.com/heavenshell/vim-pydocstriong/
 " Description: Generate Python docstring to your Python script file.
@@ -76,7 +76,7 @@ function! s:readoneline(indent, prefix)
   return tmpl
 endfunction
 
-function! s:builddocstring(strs, indent)
+function! s:builddocstring(strs, indent, nested_indent)
   let type  = a:strs['type']
   let prefix = a:strs['header']
   let args = a:strs['args']
@@ -108,6 +108,7 @@ function! s:builddocstring(strs, indent)
           let arg = substitute(line, '{{_arg_}}', arg, 'g')
           let arg = substitute(arg, '{{_lf_}}', "\n", '')
           let arg = substitute(arg, '{{_indent_}}', a:indent, 'g')
+          let arg = substitute(arg, '{{_nested_indent_}}', a:nested_indent, 'g')
           call add(docstrings, a:indent . arg)
         endfor
       elseif line =~ '{{_indent_}}'
@@ -165,13 +166,15 @@ function! pydocstring#insert()
       call s:insert(startpos, indent . tmpl)
     endif
   else
+    let space = repeat(' ', &softtabstop)
+    let nested_indent = space
     if len(indent) == 0
-      let indent = repeat(' ', &softtabstop)
+      let indent = space
     else
-      let indent = indent . repeat(' ', &softtabstop)
+      let indent = indent . space
     endif
     try
-      let result = s:builddocstring(docstring, indent)
+      let result = s:builddocstring(docstring, indent, nested_indent)
       call s:insert(insertpos + 1, result)
     catch /^Template/
       echomsg v:exception
