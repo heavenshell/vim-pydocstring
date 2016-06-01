@@ -1,3 +1,11 @@
+Version 0.0.7
+-------------
+Released on June 1th 2016
+
+- add ``_nested_indent_`` template variable.
+  see https://github.com/heavenshell/vim-pydocstring/issues/3#issuecomment-222584162
+  Thx @pirDOL
+
 Version 0.0.6
 -------------
 Released on January 17th 2016

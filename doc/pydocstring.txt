@@ -139,6 +139,7 @@ Template variables.
   |{{_arg_}}|	Assign function or method's argument.
   |{{_ln_}}|	Assign line break.
   |{{_indent_}}|	Assign indent.
+  |{{_nested_indent_}}|	Assign indent.
 
 ==============================================================================
 VARIABLES					*pydocstring-vim-variables*
@@ -198,6 +199,33 @@ Numpy style docstring template example.
         arg2 is
     """
     pass
+
+Nested indent example.
+
+  Add following template to multi.txt
+>
+    """{{_header_}}
+
+    {{_indent_}}Args:
+    {{_nested_indent_}}{{_arg_}}:
+    """
+<
+  Set cursor on `def arg1` line and type following.
+>
+    :Pydocstring
+<
+  Then docstring put under `def` line.
+>
+  class Foo(object):
+    def foo(self, arg1, arg2):
+        """foo
+
+        Args:
+            arg1:
+            arg2:
+        """
+        pass
+<
 
 Override default mapping.
 
