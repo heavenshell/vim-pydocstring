@@ -31,7 +31,7 @@ let s:regexs = {
 \ }
 
 function! s:readtmpl(type)
-  let path = s:tmpldir . a:type . '.txt'
+  let path = expand(s:tmpldir . a:type . '.txt')
   if !filereadable(path)
     throw 'Template ' . path . ' is not exists.'
   endif
