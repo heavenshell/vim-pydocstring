@@ -1,3 +1,11 @@
+Version 0.0.8
+-------------
+Released on Sep 1th 2016
+
+- Fix add expand to allow relative path
+  see https://github.com/heavenshell/vim-pydocstring/pull/12
+  thx @ning-yang
+
 Version 0.0.7
 -------------
 Released on June 1th 2016
