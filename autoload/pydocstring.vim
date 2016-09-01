@@ -1,6 +1,6 @@
 " Insert Docstring.
 " Author:      Shinya Ohyanagi <sohyanagi@gmail.com>
-" Version:     0.0.7
+" Version:     0.0.8
 " License:     This file is placed in the public domain.
 " WebPage:     http://github.com/heavenshell/vim-pydocstriong/
 " Description: Generate Python docstring to your Python script file.
@@ -31,7 +31,7 @@ let s:regexs = {
 \ }
 
 function! s:readtmpl(type)
-  let path = s:tmpldir . a:type . '.txt'
+  let path = expand(s:tmpldir . a:type . '.txt')
   if !filereadable(path)
     throw 'Template ' . path . ' is not exists.'
   endif
