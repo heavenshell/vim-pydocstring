@@ -1,0 +1,11 @@
+" Minimal vimrc to run tests
+" --------------------------
+
+set nocompatible
+set nu
+" Clear all rtp
+set rtp=
+
+" Now add vader.vim to runtime path
+set rtp+=./vader.vim
+filetype plugin indent on

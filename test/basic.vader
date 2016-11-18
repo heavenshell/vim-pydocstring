@@ -1,0 +1,5 @@
+Do (Sample):
+  iHello, world!
+
+Expect(Sample):
+  Hello, world!
