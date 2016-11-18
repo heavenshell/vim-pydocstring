@@ -1,5 +1,151 @@
-Do (Sample):
-  iHello, world!
+# vim:set et sw=4 ts=4 tw=79:
 
-Expect(Sample):
-  Hello, world!
+# Test def keyword
+#-------------------------------------------------------------------------------
+Given python (def foo):
+    def foo():
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo():
+        """foo"""
+        pass
+
+Given python (def foo with 1 param):
+    def foo(arg):
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(arg):
+        """foo
+
+        :param arg:
+        """
+        pass
+
+Given python (def foo with 2 params):
+    def foo(arg1, arg2):
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(arg1, arg2):
+        """foo
+
+        :param arg1:
+        :param arg2:
+        """
+        pass
+
+Given python (def foo with variadic params):
+    def foo(*arg):
+        pass
+
+Execute:
+    Pydocstring
+Expect python:
+    def foo(*arg):
+        """foo
+
+        :param *arg:
+        """
+        pass
+
+
+# Test class keyword
+#-------------------------------------------------------------------------------
+
+
+Given python (class Foo):
+    class Foo(object):
+        def foo(self):
+            pass
+
+        def arg1(self, arg1):
+            pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    class Foo(object):
+        """Foo"""
+        def foo(self):
+            pass
+
+        def arg1(self, arg1):
+            pass
+
+
+Given python (class Foo):
+    class Foo(object):
+        def foo(self):
+            pass
+
+        def arg1(self, arg1):
+            pass
+
+Do (Put cursor to def foo(self)):
+    j
+
+Then Execute (Execute Pydocstring on def foo(self)):
+    Pydocstring
+
+Expect python:
+    class Foo(object):
+        def foo(self):
+            """foo"""
+            pass
+
+        def arg1(self, arg1):
+            pass
+
+
+Given python (class Foo):
+    class Foo(object):
+        def foo(self):
+            pass
+
+        def arg1(self, arg1):
+            pass
+
+Do (Put cursor to def arg1(self, arg1)):
+    4j
+
+Then Execute (Execute Pydocstring on def arg1(self, arg1)):
+    Pydocstring
+
+Expect python:
+    class Foo(object):
+        def foo(self):
+            pass
+
+        def arg1(self, arg1):
+            """arg1
+
+            :param arg1:
+            """
+            pass
+
+# Test aync/await keyword
+#-------------------------------------------------------------------------------
+Given python (async def foo):
+    async def foo():
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    async def foo():
+        """foo"""
+        pass
+
