@@ -11,11 +11,10 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " Path to docstring template.
-if exists('g:pydocstring_templates_dir')
-  let s:tmpldir = g:pydocstring_templates_dir
-else
-  let s:tmpldir = expand('<sfile>:p:h:h') . '/template/pydocstring/'
+if !exists('g:pydocstring_templates_dir')
+  let g:pydocstring_templates_dir = expand('<sfile>:p:h:h') . '/template/pydocstring/'
 endif
+
 " Use comment.txt when cursor is not on def|class keyword.
 if !exists('g:pydocstring_enable_comment')
   let g:pydocstring_enable_comment = 1
@@ -31,7 +30,13 @@ let s:regexs = {
 \ }
 
 function! s:readtmpl(type)
-  let path = expand(s:tmpldir . a:type . '.txt')
+  let tmpldir = g:pydocstring_templates_dir
+  " Append the back slash if needed.
+  if g:pydocstring_templates_dir !~ '/$'
+    let tmpldir =  tmpldir . '/'
+  endif
+
+  let path = expand(tmpldir . a:type . '.txt')
   if !filereadable(path)
     throw 'Template ' . path . ' is not exists.'
   endif
