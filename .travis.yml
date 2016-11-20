@@ -11,16 +11,12 @@ install:
   - make && make install
   - git clone https://github.com/junegunn/vader.vim.git
   - export VIM_EXE=$HOME/bin/vim/bin/vim
-  - cd $HOME
+  - cd $HOME/build/heavenshell/vim-pydocstring
 
 before_script:
   - $HOME/bin/vim/bin/vim --version
 
 script:
-  - pwd
-  - ls
-  - ls build
-  - ls builds
   - cd test
   - ./run.sh > /dev/null && echo Success || echo Fail
   - cd ..
