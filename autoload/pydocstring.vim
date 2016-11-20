@@ -1,6 +1,6 @@
 " Insert Docstring.
 " Author:      Shinya Ohyanagi <sohyanagi@gmail.com>
-" Version:     0.0.8
+" Version:     0.0.9
 " License:     This file is placed in the public domain.
 " WebPage:     http://github.com/heavenshell/vim-pydocstriong/
 " Description: Generate Python docstring to your Python script file.
