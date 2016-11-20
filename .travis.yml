@@ -1,6 +1,7 @@
 language: vim
 
 install:
+  - pwd
   - git clone https://github.com/junegunn/vader.vim.git test/vader.vim
   - git clone https://github.com/vim/vim /tmp/vim
   - mkdir ~/bin
