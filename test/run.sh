@@ -3,8 +3,7 @@
 ###############################################################################
 #                            Execute all test case                            #
 ###############################################################################
-
-VIM_EXE="vim"
+: "${VIM_EXE:=vim}"
 
 # If nvim is available in PATH, then we prefer to use nvim
 # since it works better with nodemon

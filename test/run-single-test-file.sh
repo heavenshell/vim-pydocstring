@@ -9,7 +9,7 @@ if [ $# -eq 0 ]; then
   exit
 fi
 
-VIM_EXE="vim"
+: "${VIM_EXE:=vim}"
 
 if  hash nvim 2>/dev/null ; then
   VIM_EXE="nvim"
