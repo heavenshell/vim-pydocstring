@@ -1,3 +1,11 @@
+Version 0.0.9
+-------------
+Released on Nov 20th 2016
+
+- Add Vader integration tes
+  see https://github.com/heavenshell/vim-pydocstring/pull/14
+  Thx @letientai299
+
 Version 0.0.8
 -------------
 Released on Sep 1th 2016
