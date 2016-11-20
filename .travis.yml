@@ -1,6 +1,7 @@
 language: vim
 
 install:
+  - git clone https://github.com/junegunn/vader.vim.git test/vader.vim
   - git clone https://github.com/vim/vim /tmp/vim
   - mkdir ~/bin
   - cd /tmp/vim
@@ -9,6 +10,7 @@ install:
   - make && make install
   - git clone https://github.com/junegunn/vader.vim.git
   - export VIM_EXE=$HOME/bin/vim/bin/vim
+  - cd $HOME
 
 before_script:
   - $HOME/bin/vim/bin/vim --version
