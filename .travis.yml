@@ -18,8 +18,8 @@ before_script:
 script:
   - pwd
   - ls
-  - ls/build
-  - ls/builds
+  - ls build
+  - ls builds
   - cd test
   - ./run.sh > /dev/null && echo Success || echo Fail
   - cd ..
