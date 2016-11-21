@@ -1,15 +1,48 @@
 # vim:set et sw=4 ts=4 tw=79:
 
-Given python (Simple def foo return str):
-    def foo(sample_var):
+Given python (def foo no arg return str):
+    def foo() -> str:
         pass
 Execute:
     Pydocstring
 
 Expect python:
-    def foo(sample_var):
+    def foo() -> str:
+        """foo
+
+        return (str):
+        """
+        pass
+
+Given python (def foo with 1 arg return str):
+    def foo(sample_var) -> str:
+        pass
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(sample_var) -> str:
         """foo
 
         :param sample_var:
+
+        return (str):
+        """
+        pass
+
+Given python (def foo 2 args return str):
+    def foo(arg1, arg2) -> str:
+        pass
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(arg1, arg2) -> str:
+        """foo
+
+        :param arg1:
+        :param arg2:
+
+        return (str):
         """
         pass

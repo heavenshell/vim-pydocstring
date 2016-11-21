@@ -1,6 +1,4 @@
 """{{_header_}}
-{{_lf_}}
 :param {{_args_}}:
-{{_lf_}}
 return ({{_returnType_}}):
 """

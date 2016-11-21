@@ -1,4 +1,4 @@
 """{{_header_}}
-
-{{_arg_}}:{{_lf_}}{{_indent_}}    {{_arg_}} is
+{{_args_}}:{{_lf_}}{{_indent_}}    {{_args_}} is
+return ({{_returnType_}}):
 """

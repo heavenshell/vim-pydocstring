@@ -24,10 +24,10 @@ if !exists('g:pydocstring_ignore_args_pattern')
 endif
 
 let s:regexs = {
-\ 'def': '^def\s\|^\s*def\s',
-\ 'class': '^class\s\|^\s*class\s',
-\ 'async': '^async\s*def\s\|^\s*async\sdef\s'
-\ }
+      \ 'def': '^def\s\|^\s*def\s',
+      \ 'class': '^class\s\|^\s*class\s',
+      \ 'async': '^async\s*def\s\|^\s*async\sdef\s'
+      \ }
 
 function! s:readtmpl(type)
   let tmpldir = g:pydocstring_templates_dir
@@ -45,9 +45,9 @@ function! s:readtmpl(type)
 endfunction
 
 function! s:parseClass(line)
-" For class definition, we just simply need to extract the class name.  We can
-" do that by just delete every white spaces and the whole parenthesics if
-" existed.
+  " For class definition, we just simply need to extract the class name.  We can
+  " do that by just delete every white spaces and the whole parenthesics if
+  " existed.
   let header = substitute(a:line, '\s\|(.*\|:', '', 'g')
   let parse = {'type': 'class', 'header': header, 'args': '', 'returnType': ''}
   return parse
@@ -153,21 +153,24 @@ function! s:builddocstring(strs, indent, nested_indent)
   for line in lines
     if line =~ '{{_header_}}'
       let header = substitute(line, '{{_header_}}', prefix, '')
-      let header = substitute(header, '{{_lf_}}', '\n', '')
       call add(docstrings, a:indent . header)
+      call add(docstrings, '' )
     elseif line =~ '{{_args_}}'
-      for arg in args
-        let arg = substitute(arg, '=.*$', '', '')
-        if arg =~ g:pydocstring_ignore_args_pattern
-          continue
-        endif
-        let template = line
-        let template = substitute(template, '{{_args_}}', arg, 'g')
-        let template = substitute(template, '{{_lf_}}', '\n', '')
-        let template = substitute(template, '{{_indent_}}', a:indent, 'g')
-        let template = substitute(template, '{{_nested_indent_}}', a:nested_indent, 'g')
-        call add(docstrings, a:indent . template)
-      endfor
+      if len(args) != 0
+        for arg in args
+          let arg = substitute(arg, '=.*$', '', '')
+          if arg =~ g:pydocstring_ignore_args_pattern
+            continue
+          endif
+          let template = line
+          let template = substitute(template, '{{_args_}}', arg, 'g')
+          let template = substitute(template, '{{_lf_}}', '\n', '')
+          let template = substitute(template, '{{_indent_}}', a:indent, 'g')
+          let template = substitute(template, '{{_nested_indent_}}', a:nested_indent, 'g')
+          call add(docstrings, a:indent . template)
+        endfor
+        call add(docstrings, '' )
+      endif
     elseif line =~ '{{_indent_}}'
       let arg = substitute(line, '{{_indent_}}', a:indent, 'g')
       call add(docstrings, arg)
@@ -176,20 +179,16 @@ function! s:builddocstring(strs, indent, nested_indent)
         let rt = substitute(line, '{{_returnType_}}', returnType, '')
         call add(docstrings, a:indent . rt)
       else
-        " call remove(docstrings, -1)
+        call remove(docstrings, -1)
       endif
     elseif line == '"""'
       call add(docstrings, a:indent . line)
     else
       call add(docstrings, line)
     endif
-
-  echo string(docstrings)
-
   endfor
   let tmpl = substitute(join(docstrings, "\n"), "\n$", '', '')
 
-  echom string(tmpl)
   return tmpl
 endfunction
 
