@@ -53,8 +53,19 @@ function! s:parseClass(line)
   return parse
 endfunction
 
+function! s:parseFunc(type, line)
+  let header = substitute(a:line, '\s\|(.*\|:', '', 'g')
+
+  let argsStr = substitute(a:line, '\s\|.*(\|).*', '', 'g')
+  let args = split(argsStr, ',')
+
+  let parse = {'type': a:type, 'header': header, 'args': args}
+  return parse
+endfunction
+
 function! s:parse(line)
   let str = substitute(a:line, '\\', '', 'g')
+  let str = substitute(a:line, '#.*$', '', 'g')
   let type = ''
 
   if str =~ s:regexs['class']
@@ -71,18 +82,8 @@ function! s:parse(line)
   else
     return 0
   endif
-  let str = substitute(str, '\s\|):\|)\s:', '', 'g')
 
-  let strs = split(str, '(')
-  let header = strs[0]
-  let args = []
-  if len(strs) > 1
-    let args = split(strs[1], ',')
-  end
-
-  let parse = {'type': type, 'header': header, 'args': args}
-
-  return parse
+  return s:parseFunc(type, str)
 endfunction
 
 " Vim Script does not support lambda function...
@@ -172,7 +173,7 @@ function! pydocstring#insert()
   let indent = matchstr(line, '^\(\s*\)')
 
   let startpos = line('.')
-  let insertpos = search('\:\+$')
+  let insertpos = search('\:\(\s*#.*\)*$')
   let lines = join(getline(startpos, insertpos))
 
   let docstring = s:parse(lines)
