@@ -44,18 +44,30 @@ function! s:readtmpl(type)
   return tmpl
 endfunction
 
+function! s:parseClass(line)
+" For class definition, we just simply need to extract the class name.  We can
+" do that by just delete every white spaces and the whole parenthesics if
+" existed.
+  let header = substitute(a:line, '\s\|(.*\|:', '', 'g')
+  let parse = {'type': 'class', 'header': header, 'args': ''}
+  return parse
+endfunction
+
 function! s:parse(line)
   let str = substitute(a:line, '\\', '', 'g')
   let type = ''
+
+  if str =~ s:regexs['class']
+    let str = substitute(str, s:regexs['class'], '', '')
+    return s:parseClass(str)
+  endif
+
   if str =~ s:regexs['def']
     let str = substitute(str, s:regexs['def'], '', '')
     let type = 'def'
   elseif str =~ s:regexs['async']
     let str = substitute(str, s:regexs['async'], '', '')
     let type = 'def'
-  elseif str =~ s:regexs['class']
-    let str = substitute(str, s:regexs['class'], '', '')
-    let type = 'class'
   else
     return 0
   endif
@@ -85,6 +97,7 @@ function! s:builddocstring(strs, indent, nested_indent)
   let type  = a:strs['type']
   let prefix = a:strs['header']
   let args = a:strs['args']
+
   let tmpl = ''
   if len(args) > 0 && type == 'def'
     let docstrings = []

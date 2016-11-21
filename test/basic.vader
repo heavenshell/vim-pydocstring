@@ -64,6 +64,31 @@ Expect python:
 #-------------------------------------------------------------------------------
 
 
+Given python (class Foo no extends):
+    class Foo:
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    class Foo:
+        """Foo"""
+        pass
+
+Given python (class Foo extends multiple classes):
+    class Foo(ClassA, ClassB, ClassC):
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    class Foo(ClassA, ClassB, ClassC):
+        """Foo"""
+        pass
+
+
 Given python (class Foo):
     class Foo(object):
         def foo(self):
