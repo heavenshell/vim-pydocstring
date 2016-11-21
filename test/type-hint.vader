@@ -3,6 +3,7 @@
 Given python (def foo no arg return str):
     def foo() -> str:
         pass
+
 Execute:
     Pydocstring
 
@@ -46,3 +47,58 @@ Expect python:
         return (str):
         """
         pass
+
+Given python (def foo 1 arg with type and return int):
+    def foo(n: int) -> int:
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(n: int) -> int:
+        """foo
+
+        :param n (int):
+
+        return (int):
+        """
+        pass
+
+Given python (def foo 2 args with type and return int):
+    def foo(n: int, m: str) -> int:
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(n: int, m: str) -> int:
+        """foo
+
+        :param n (int):
+        :param m (str):
+
+        return (int):
+        """
+        pass
+
+
+Given python (def foo 1 arg with type, 1 none, and return int):
+    def foo(n: int, arg) -> int:
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(n: int, arg) -> int:
+        """foo
+
+        :param n (int):
+        :param arg:
+
+        return (int):
+        """
+        pass
+
