@@ -135,11 +135,18 @@ If you don't like default docstring, You can modify docstring template.
 
 Template variables.
   |{{_header_}}|	Class, function or method name as a value.
-  |{{_args_}}|	Assign function or method's arguments.
-  |{{_lf_}}|	Assign line break.
+  |{{_args_}}|		Assign function or method's arguments.
+  |{{_lf_}}|		Assign line break.
   |{{_indent_}}|	Assign indent.
   |{{_nested_indent_}}|	Assign indent.
+  |{{_returnType_}}|	Function or method return type.
 
+There's some rules for parsing template:
+- `{{_header_}`, `{{_args}}` and `{{_returnType_}}` should be on their own
+  line.
+- Pydocstring will insert a emmpty line between each parts, so you don't
+  need to include empty line in your template. Please see the default template
+  directory to have an example.
 ==============================================================================
 VARIABLES					*pydocstring-vim-variables*
 
