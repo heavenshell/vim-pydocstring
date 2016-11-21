@@ -132,6 +132,8 @@ If you don't like default docstring, You can modify docstring template.
   One-line docstring.
 - multi.txt
   Multi-line docstring.
+- arg.txt
+  Template for each argument.
 
 Template variables.
   |{{_header_}}|	Class, function or method name as a value.
@@ -140,6 +142,8 @@ Template variables.
   |{{_indent_}}|	Assign indent.
   |{{_nested_indent_}}|	Assign indent.
   |{{_returnType_}}|	Function or method return type.
+  |{{_name_}}|		Argument name, should only be used in `arg.txt`
+  |{{_type_}}|		Argument type, should only be used in `arg.txt`
 
 There's some rules for parsing template:
 - `{{_header_}`, `{{_args}}` and `{{_returnType_}}` should be on their own

@@ -29,7 +29,7 @@ Expect python:
         """foo
 
         arg1:
-            arg1 is
+            the ...
         """
         pass
 
@@ -46,9 +46,9 @@ Expect python:
         """foo
 
         arg1:
-            arg1 is
+            the ...
         arg2:
-            arg2 is
+            the ...
         """
         pass
 

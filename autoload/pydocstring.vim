@@ -163,6 +163,15 @@ function! s:builddocstring(strs, indent, nested_indent)
             continue
           endif
           let template = line
+
+          if match(arg, ':') != -1
+            let argTemplate = s:readtmpl('arg')
+            let argTemplate = join(s:readtmpl('arg'), '')
+            let argParts = split(arg, ':')
+            let argTemplate = substitute(argTemplate, '{{_name_}}', argParts[0], '')
+            let arg = substitute(argTemplate, '{{_type_}}', argParts[1], '')
+          endif
+
           let template = substitute(template, '{{_args_}}', arg, 'g')
           let template = substitute(template, '{{_lf_}}', '\n', '')
           let template = substitute(template, '{{_indent_}}', a:indent, 'g')
