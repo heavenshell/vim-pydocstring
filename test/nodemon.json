@@ -6,7 +6,7 @@
     "vader.vim"
   ],
   "verbose": true,
-  "ext": "vader vim",
+  "ext": "txt vader vim",
   "execMap": {
     "vader": "./run-single-test-file.sh"
   }

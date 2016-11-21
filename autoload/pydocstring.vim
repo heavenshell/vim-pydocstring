@@ -49,7 +49,7 @@ function! s:parseClass(line)
 " do that by just delete every white spaces and the whole parenthesics if
 " existed.
   let header = substitute(a:line, '\s\|(.*\|:', '', 'g')
-  let parse = {'type': 'class', 'header': header, 'args': ''}
+  let parse = {'type': 'class', 'header': header, 'args': '', 'returnType': ''}
   return parse
 endfunction
 
@@ -59,7 +59,15 @@ function! s:parseFunc(type, line)
   let argsStr = substitute(a:line, '\s\|.*(\|).*', '', 'g')
   let args = split(argsStr, ',')
 
-  let parse = {'type': a:type, 'header': header, 'args': args}
+  let arrowIndex = match(a:line, "->")
+  if arrowIndex != -1
+    let substring = strpart(a:line, arrowIndex+2)
+    let returnType = substitute(substring, '\W*', '', 'g')
+  else
+    let returnType = ''
+  endif
+
+  let parse = {'type': a:type, 'header': header, 'args': args, 'returnType': returnType}
   return parse
 endfunction
 
@@ -94,76 +102,94 @@ function! s:readoneline(indent, prefix)
   return tmpl
 endfunction
 
+" Check if we should show args in the docstring. We won't do that in  case:
+" - There's no args.
+" - There's only one arg that match with g:pydocstring_ignore_args_pattern
+function! s:shouldIncludeArgs(args)
+  if len(a:args) == 0
+    return 0
+  endif
+
+  if len(a:args) == 1 && a:args[0] =~ g:pydocstring_ignore_args_pattern
+    return 0
+  endif
+
+  return 1
+endfunction
+
+" Check if we should use one line docstring.
+" There's several cases:
+" - Type is `class`
+" - No return type and no args.
+" - No return type and the only one args is `self` or `cls` (defined by
+"   g:pydocstring_ignore_args_pattern
+"
+" Return 1 for True, and 0 for False
+function! s:shouldUseOneLineDocString(type, args, returnType)
+  if a:type != 'def'
+    return 1
+  endif
+
+  if a:returnType != ''
+    return 0
+  endif
+
+  return !s:shouldIncludeArgs(a:args)
+endfunction
+
 function! s:builddocstring(strs, indent, nested_indent)
   let type  = a:strs['type']
   let prefix = a:strs['header']
   let args = a:strs['args']
+  let returnType = a:strs['returnType']
 
-  let tmpl = ''
-  if len(args) > 0 && type == 'def'
-    let docstrings = []
-    let lines = s:readtmpl('multi')
-    for line in lines
-      if line =~ '{{_header_}}'
-        let header = substitute(line, '{{_header_}}', prefix, '')
-        call add(docstrings, a:indent . header)
-      elseif line =~ '{{_arg_}}'
-        if len(args) == 0
-          let tmpl = s:readoneline(a:indent, prefix)
-          return tmpl
-        endif
-
-        if args[0] =~ g:pydocstring_ignore_args_pattern && len(args) == 1
-          let tmpl = s:readoneline(a:indent, prefix)
-          return tmpl
-        endif
-
-        let arglist = []
-        for arg in args
-          let arg = substitute(arg, '=.*$', '', '')
-          if arg =~ g:pydocstring_ignore_args_pattern
-            continue
-          endif
-          let arg = substitute(line, '{{_arg_}}', arg, 'g')
-          let arg = substitute(arg, '{{_lf_}}', "\n", '')
-          let arg = substitute(arg, '{{_indent_}}', a:indent, 'g')
-          let arg = substitute(arg, '{{_nested_indent_}}', a:nested_indent, 'g')
-          call add(docstrings, a:indent . arg)
-        endfor
-      elseif line =~ '{{_indent_}}'
-        let arg = substitute(line, '{{_indent_}}', a:indent, 'g')
-        call add(docstrings, arg)
-      elseif line =~ '{{_args_}}'
-        if len(args) == 0
-          let tmpl = s:readoneline(a:indent, prefix)
-          return tmpl
-        endif
-
-        if args[0] =~ g:pydocstring_ignore_args_pattern && len(args) == 1
-          let tmpl = s:readoneline(a:indent, prefix)
-          return tmpl
-        endif
-
-        let arglist = []
-        for arg in args
-          let arg = substitute(arg, '=.*$', '', '')
-          if arg =~ g:pydocstring_ignore_args_pattern
-            continue
-          endif
-          let arg = substitute(line, '{{_args_}}', arg, '')
-          call add(docstrings, a:indent . arg)
-        endfor
-      elseif line == '"""'
-        call add(docstrings, a:indent . line)
-      else
-        call add(docstrings, line)
-      endif
-    endfor
-    let tmpl = substitute(join(docstrings, "\n"), "\n$", '', '')
-  else
-    let tmpl = s:readoneline(a:indent, prefix)
+  if s:shouldUseOneLineDocString(type, args, returnType)
+    return s:readoneline(a:indent, prefix)
   endif
 
+  let tmpl = ''
+  let docstrings = []
+  let lines = s:readtmpl('multi')
+  for line in lines
+    if line =~ '{{_header_}}'
+      let header = substitute(line, '{{_header_}}', prefix, '')
+      let header = substitute(header, '{{_lf_}}', '\n', '')
+      call add(docstrings, a:indent . header)
+    elseif line =~ '{{_args_}}'
+      for arg in args
+        let arg = substitute(arg, '=.*$', '', '')
+        if arg =~ g:pydocstring_ignore_args_pattern
+          continue
+        endif
+        let template = line
+        let template = substitute(template, '{{_args_}}', arg, 'g')
+        let template = substitute(template, '{{_lf_}}', '\n', '')
+        let template = substitute(template, '{{_indent_}}', a:indent, 'g')
+        let template = substitute(template, '{{_nested_indent_}}', a:nested_indent, 'g')
+        call add(docstrings, a:indent . template)
+      endfor
+    elseif line =~ '{{_indent_}}'
+      let arg = substitute(line, '{{_indent_}}', a:indent, 'g')
+      call add(docstrings, arg)
+    elseif line =~ '{{_returnType_}}'
+      if strlen(returnType) != 0
+        let rt = substitute(line, '{{_returnType_}}', returnType, '')
+        call add(docstrings, a:indent . rt)
+      else
+        " call remove(docstrings, -1)
+      endif
+    elseif line == '"""'
+      call add(docstrings, a:indent . line)
+    else
+      call add(docstrings, line)
+    endif
+
+  echo string(docstrings)
+
+  endfor
+  let tmpl = substitute(join(docstrings, "\n"), "\n$", '', '')
+
+  echom string(tmpl)
   return tmpl
 endfunction
 

@@ -1,0 +1,15 @@
+# vim:set et sw=4 ts=4 tw=79:
+
+Given python (Simple def foo return str):
+    def foo(sample_var):
+        pass
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(sample_var):
+        """foo
+
+        :param sample_var:
+        """
+        pass

@@ -124,7 +124,7 @@ TEMPLATE					*pydocstring-vim-template*
 
 If you don't like default docstring, You can modify docstring template.
 >
-  let g:template_vim_template_dir = '/path/to/your/template/directory'
+  let g:pydocstring_templates_dir = '/path/to/your/template/directory'
 <
 - comment.txt
   Comment.
@@ -136,8 +136,7 @@ If you don't like default docstring, You can modify docstring template.
 Template variables.
   |{{_header_}}|	Class, function or method name as a value.
   |{{_args_}}|	Assign function or method's arguments.
-  |{{_arg_}}|	Assign function or method's argument.
-  |{{_ln_}}|	Assign line break.
+  |{{_lf_}}|	Assign line break.
   |{{_indent_}}|	Assign indent.
   |{{_nested_indent_}}|	Assign indent.
 
