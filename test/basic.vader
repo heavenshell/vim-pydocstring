@@ -45,6 +45,23 @@ Expect python:
         """
         pass
 
+Given python (def foo with 2 params and a comment block):
+    def foo(arg1, arg2): # Something fun (just, for, test)
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(arg1, arg2): # Something fun (just, for, test)
+        """foo
+
+        :param arg1:
+        :param arg2:
+        """
+        pass
+
+
 Given python (def foo with variadic params):
     def foo(*arg):
         pass
@@ -62,6 +79,31 @@ Expect python:
 
 # Test class keyword
 #-------------------------------------------------------------------------------
+
+
+Given python (class Foo no extends):
+    class Foo:
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    class Foo:
+        """Foo"""
+        pass
+
+Given python (class Foo extends multiple classes):
+    class Foo(ClassA, ClassB, ClassC):
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    class Foo(ClassA, ClassB, ClassC):
+        """Foo"""
+        pass
 
 
 Given python (class Foo):
