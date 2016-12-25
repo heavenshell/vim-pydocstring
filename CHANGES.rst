@@ -1,8 +1,16 @@
+Version 0.1.0
+-------------
+Released on Dec 25th 2016
+
+- Add type-hint
+  see https://github.com/heavenshell/vim-pydocstring/pull/15
+  Thx @letientai299
+
 Version 0.0.9
 -------------
 Released on Nov 20th 2016
 
-- Add Vader integration tes
+- Add Vader integration tests
   see https://github.com/heavenshell/vim-pydocstring/pull/14
   Thx @letientai299
 
