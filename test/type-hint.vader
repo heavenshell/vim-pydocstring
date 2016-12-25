@@ -11,7 +11,7 @@ Expect python:
     def foo() -> str:
         """foo
 
-        return (str):
+        :rtype: str
         """
         pass
 
@@ -25,9 +25,9 @@ Expect python:
     def foo(sample_var) -> str:
         """foo
 
-        :param sample_var:
+        :param sample_var
 
-        return (str):
+        :rtype: str
         """
         pass
 
@@ -41,10 +41,10 @@ Expect python:
     def foo(arg1, arg2) -> str:
         """foo
 
-        :param arg1:
-        :param arg2:
+        :param arg1
+        :param arg2
 
-        return (str):
+        :rtype: str
         """
         pass
 
@@ -59,9 +59,10 @@ Expect python:
     def foo(n: int) -> int:
         """foo
 
-        :param n (int):
+        :param n:
+        :type n: int
 
-        return (int):
+        :rtype: int
         """
         pass
 
@@ -76,10 +77,12 @@ Expect python:
     def foo(n: int, m: str) -> int:
         """foo
 
-        :param n (int):
-        :param m (str):
+        :param n:
+        :type n: int
+        :param m:
+        :type m: str
 
-        return (int):
+        :rtype: int
         """
         pass
 
@@ -95,10 +98,11 @@ Expect python:
     def foo(n: int, arg) -> int:
         """foo
 
-        :param n (int):
-        :param arg:
+        :param n:
+        :type n: int
+        :param arg
 
-        return (int):
+        :rtype: int
         """
         pass
 
