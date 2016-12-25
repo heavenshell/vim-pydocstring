@@ -1,0 +1,1 @@
+{{_name_}}:{{_lf_}}{{_indent_}}:type {{_name_}}: {{_type_}}
