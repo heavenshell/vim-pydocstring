@@ -1,6 +1,6 @@
 " Insert Docstring.
 " Author:      Shinya Ohyanagi <sohyanagi@gmail.com>
-" Version:     0.1.0
+" Version:     0.1.1
 " License:     This file is placed in the public domain.
 " WebPage:     http://github.com/heavenshell/vim-pydocstriong/
 " Description: Generate Python docstring to your Python script file.
@@ -163,22 +163,38 @@ function! s:builddocstring(strs, indent, nested_indent)
             continue
           endif
           let template = line
-
+          let typed = 0
           if match(arg, ':') != -1
             let argTemplate = s:readtmpl('arg')
             let argTemplate = join(s:readtmpl('arg'), '')
             let argParts = split(arg, ':')
             let argTemplate = substitute(argTemplate, '{{_name_}}', argParts[0], 'g')
             let arg = substitute(argTemplate, '{{_type_}}', argParts[1], 'g')
+            let typed = 1
           endif
-
           let template = substitute(template, '{{_args_}}', arg, 'g')
+          if typed == 1
+            " Fix following bugs.
+            "   `def foo(arg: str):` generates like followings
+            "   ```
+            "   :param arg:
+            "   :type arg: str:
+            "   ```
+            " Template file describes as followings
+            "   ```
+            "   '''
+            "   {{_header_}}
+            "   :param {{_args_}}:
+            "   :rtype: {{_returnType_}}
+            "   '''
+            let template = substitute(template, ':$', '', 'g')
+          endif
           let template = substitute(template, '{{_lf_}}', '\n', 'g')
           let template = substitute(template, '{{_indent_}}', a:indent, 'g')
           let template = substitute(template, '{{_nested_indent_}}', a:nested_indent, 'g')
           call add(docstrings, a:indent . template)
         endfor
-        call add(docstrings, '' )
+        call add(docstrings, '')
       endif
     elseif line =~ '{{_indent_}}'
       let arg = substitute(line, '{{_indent_}}', a:indent, 'g')
