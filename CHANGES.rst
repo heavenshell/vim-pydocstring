@@ -1,3 +1,11 @@
+Version 0.1.1
+-------------
+Released on Feb 12th 2017
+
+- Fix bug
+  If none typed arg, lack of last `:`.
+  see https://github.com/heavenshell/vim-pydocstring/issues/17
+
 Version 0.1.0
 -------------
 Released on Dec 25th 2016
