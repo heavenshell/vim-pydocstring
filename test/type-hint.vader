@@ -25,7 +25,7 @@ Expect python:
     def foo(sample_var) -> str:
         """foo
 
-        :param sample_var
+        :param sample_var:
 
         :rtype: str
         """
@@ -41,8 +41,8 @@ Expect python:
     def foo(arg1, arg2) -> str:
         """foo
 
-        :param arg1
-        :param arg2
+        :param arg1:
+        :param arg2:
 
         :rtype: str
         """
@@ -100,7 +100,7 @@ Expect python:
 
         :param n:
         :type n: int
-        :param arg
+        :param arg:
 
         :rtype: int
         """
