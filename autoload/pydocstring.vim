@@ -1,7 +1,6 @@
 " Insert Docstring.
 " Author:      Shinya Ohyanagi <sohyanagi@gmail.com>
-" Version:     0.1.1
-" License:     This file is placed in the public domain.
+" Version:     0.1.2
 " WebPage:     http://github.com/heavenshell/vim-pydocstriong/
 " Description: Generate Python docstring to your Python script file.
 " License:     BSD, see LICENSE for more details.
@@ -61,7 +60,7 @@ function! s:parseFunc(type, line)
 
   let arrowIndex = match(a:line, "->")
   if arrowIndex != -1
-    let substring = strpart(a:line, arrowIndex+2)
+    let substring = strpart(a:line, arrowIndex + 2)
     let returnType = substitute(substring, '\W*', '', 'g')
   else
     let returnType = ''
@@ -150,11 +149,15 @@ function! s:builddocstring(strs, indent, nested_indent)
   let tmpl = ''
   let docstrings = []
   let lines = s:readtmpl('multi')
+  let has_return_type = 0
+  if match(lines, '\c{{_returnType_}}') != -1
+    let has_return_type = 1
+  endif
   for line in lines
     if line =~ '{{_header_}}'
       let header = substitute(line, '{{_header_}}', prefix, '')
       call add(docstrings, a:indent . header)
-      call add(docstrings, '' )
+      call add(docstrings, '')
     elseif line =~ '{{_args_}}'
       if len(args) != 0
         for arg in args
@@ -194,7 +197,9 @@ function! s:builddocstring(strs, indent, nested_indent)
           let template = substitute(template, '{{_nested_indent_}}', a:nested_indent, 'g')
           call add(docstrings, a:indent . template)
         endfor
-        call add(docstrings, '')
+        if has_return_type == 1
+          call add(docstrings, '')
+        endif
       endif
     elseif line =~ '{{_indent_}}'
       let arg = substitute(line, '{{_indent_}}', a:indent, 'g')
@@ -206,7 +211,7 @@ function! s:builddocstring(strs, indent, nested_indent)
       else
         call remove(docstrings, -1)
       endif
-    elseif line == '"""'
+    elseif line == '"""' || line == "'''"
       call add(docstrings, a:indent . line)
     else
       call add(docstrings, line)
