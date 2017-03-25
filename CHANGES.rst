@@ -1,3 +1,13 @@
+Version 0.1.2
+-------------
+Released on Mar 25th 2017
+
+- Fix bug
+  Ignored indent when docstring start with `'''`.
+  Delete blank line if `{{_returnType_}}` not exists.
+  see https://github.com/heavenshell/vim-pydocstring/issues/19
+  Thx @brainscience
+
 Version 0.1.1
 -------------
 Released on Feb 12th 2017
