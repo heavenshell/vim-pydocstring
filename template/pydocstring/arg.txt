@@ -1,0 +1,1 @@
+{{_name_}} : {{_type_}}{{_lf_}}{{_indent_}}{{_nested_indent_}}{{_name_}} is

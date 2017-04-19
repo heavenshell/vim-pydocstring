@@ -1,0 +1,22 @@
+language: vim
+
+install:
+  - pwd
+  - git clone https://github.com/junegunn/vader.vim.git test/vader.vim
+  - git clone https://github.com/vim/vim /tmp/vim
+  - mkdir ~/bin
+  - cd /tmp/vim
+  - sudo apt-get install -y gettext libncurses5-dev libacl1-dev libgpm-dev
+  - ./configure --with-features=huge --enable-fail-if-missing --enable-pythoninterp --prefix=$HOME/bin/vim
+  - make && make install
+  - git clone https://github.com/junegunn/vader.vim.git
+  - export VIM_EXE=$HOME/bin/vim/bin/vim
+  - cd $HOME/build/heavenshell/vim-pydocstring
+
+before_script:
+  - $HOME/bin/vim/bin/vim --version
+
+script:
+  - cd test
+  - ./run.sh > /dev/null && echo Success || echo Fail
+  - cd ..

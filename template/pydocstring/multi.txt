@@ -1,4 +1,10 @@
 """{{_header_}}
+{{_indent_}}Parameters
+{{_indent_}}----------
 
-:param {{_args_}}:
+{{_args_}} :
+{{_indent_}}Returns
+{{_indent_}}-------
+
+returnVar : {{_returnType_}}
 """

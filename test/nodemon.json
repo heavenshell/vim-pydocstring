@@ -1,0 +1,13 @@
+{
+  "watch": "../",
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules",
+    "vader.vim"
+  ],
+  "verbose": true,
+  "ext": "txt vader vim",
+  "execMap": {
+    "vader": "./run-single-test-file.sh"
+  }
+}
