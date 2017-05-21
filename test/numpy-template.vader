@@ -1,0 +1,92 @@
+# vim:set et sw=4 ts=4 tw=79:
+Execute (Setup template dir):
+    Save g:pydocstring_templates_dir
+    let g:pydocstring_templates_dir = './templates/numpy/'
+
+Given python (def foo):
+    def foo():
+        pass
+
+Execute:
+    Pydocstring
+
+
+Expect python:
+    def foo():
+        """foo"""
+        pass
+
+
+Given python (def foo with 1 params):
+    def foo(arg1):
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(arg1):
+        """foo
+
+        Parameters
+        ----------
+
+        arg1 :
+
+        Returns
+        -------
+        """
+        pass
+
+
+Given python (def foo with 2 params):
+    def foo(arg1, arg2):
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(arg1, arg2):
+        """foo
+
+        Parameters
+        ----------
+
+        arg1 :
+        arg2 :
+
+        Returns
+        -------
+        """
+        pass
+
+Given python (def foo with 2 params and type):
+    def foo(arg1: str, arg2: int) -> str:
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(arg1: str, arg2: int) -> str:
+        """foo
+
+        Parameters
+        ----------
+
+        arg1 : str
+            arg1 is
+        arg2 : int
+            arg2 is
+
+        Returns
+        -------
+
+        returnVar : str
+        """
+        pass
+
+
+Execute (Clear pydocstring_templates_dir):
+    Restore

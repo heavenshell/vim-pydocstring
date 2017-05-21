@@ -195,6 +195,7 @@ function! s:builddocstring(strs, indent, nested_indent)
           let template = substitute(template, '{{_lf_}}', '\n', 'g')
           let template = substitute(template, '{{_indent_}}', a:indent, 'g')
           let template = substitute(template, '{{_nested_indent_}}', a:nested_indent, 'g')
+          let template = substitute(template, '\s$', '', '')
           call add(docstrings, a:indent . template)
         endfor
         if has_return_type == 1
