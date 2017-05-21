@@ -4,6 +4,8 @@ pydocstring.vim
 .. image:: https://travis-ci.org/heavenshell/vim-pydocstring.svg?branch=master
   :target: https://travis-ci.org/heavenshell/vim-pydocstring
 
+.. image:: ./assets/vim-pydocstring.gif
+
 Pydocstring is a generator for Python docstrings and is capable of automatically
 
 * inserting one-line docstrings

@@ -4,8 +4,11 @@ Released on Mar 25th 2017
 
 - Fix bug
   Ignored indent when docstring start with `'''`.
+
   Delete blank line if `{{_returnType_}}` not exists.
+
   see https://github.com/heavenshell/vim-pydocstring/issues/19
+
   Thx @brainscience
 
 Version 0.1.1
@@ -13,7 +16,9 @@ Version 0.1.1
 Released on Feb 12th 2017
 
 - Fix bug
+
   If none typed arg, lack of last `:`.
+
   see https://github.com/heavenshell/vim-pydocstring/issues/17
 
 Version 0.1.0
@@ -21,7 +26,9 @@ Version 0.1.0
 Released on Dec 25th 2016
 
 - Add type-hint
+
   see https://github.com/heavenshell/vim-pydocstring/pull/15
+
   Thx @letientai299
 
 Version 0.0.9
@@ -29,7 +36,9 @@ Version 0.0.9
 Released on Nov 20th 2016
 
 - Add Vader integration tests
+
   see https://github.com/heavenshell/vim-pydocstring/pull/14
+
   Thx @letientai299
 
 Version 0.0.8
@@ -37,7 +46,9 @@ Version 0.0.8
 Released on Sep 1th 2016
 
 - Fix add expand to allow relative path
+
   see https://github.com/heavenshell/vim-pydocstring/pull/12
+
   thx @ning-yang
 
 Version 0.0.7
@@ -45,7 +56,9 @@ Version 0.0.7
 Released on June 1th 2016
 
 - add ``_nested_indent_`` template variable.
+
   see https://github.com/heavenshell/vim-pydocstring/issues/3#issuecomment-222584162
+
   Thx @pirDOL
 
 Version 0.0.6
@@ -53,6 +66,7 @@ Version 0.0.6
 Released on January 17th 2016
 
 - add ``pydocstring_enable_mapping`` option.
+
   Thx @nfischer
 
 Version 0.0.5
