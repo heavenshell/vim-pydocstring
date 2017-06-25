@@ -168,7 +168,6 @@ function! s:builddocstring(strs, indent, nested_indent)
           let template = line
           let typed = 0
           if match(arg, ':') != -1
-            let argTemplate = s:readtmpl('arg')
             let argTemplate = join(s:readtmpl('arg'), '')
             let argParts = split(arg, ':')
             let argTemplate = substitute(argTemplate, '{{_name_}}', argParts[0], 'g')
