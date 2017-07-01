@@ -1,8 +1,22 @@
+Version 0.1.3
+-------------
+Released on July 2nd 2017
+
+- Fix bug
+
+  Variable type mismatch for: argTemplate
+
+  see https://github.com/heavenshell/vim-pydocstring/issues/25
+
+  Thx @oxo42
+
+
 Version 0.1.2
 -------------
 Released on Mar 25th 2017
 
 - Fix bug
+
   Ignored indent when docstring start with `'''`.
 
   Delete blank line if `{{_returnType_}}` not exists.
