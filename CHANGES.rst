@@ -8,6 +8,15 @@ Released on Jul 18th 2017
 
   see https://github.com/heavenshell/vim-pydocstring/issues/28
 
+Released on July 2nd 2017
+
+- Fix bug
+
+  Variable type mismatch for: argTemplate
+
+  see https://github.com/heavenshell/vim-pydocstring/issues/25
+
+  Thx @oxo42
 
 Version 0.1.2
 -------------
