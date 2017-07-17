@@ -61,7 +61,9 @@ function! s:parseFunc(type, line)
   let arrowIndex = match(a:line, "->")
   if arrowIndex != -1
     let substring = strpart(a:line, arrowIndex + 2)
-    let returnType = substitute(substring, '\W*', '', 'g')
+    " issue #28 `\W*` would deleted `.`.
+    let returnType = substitute(substring, '[^0-9A-Za-z_.]*', '', 'g')
+    echomsg returnType
   else
     let returnType = ''
   endif
@@ -71,7 +73,6 @@ function! s:parseFunc(type, line)
 endfunction
 
 function! s:parse(line)
-  let str = substitute(a:line, '\\', '', 'g')
   let str = substitute(a:line, '#.*$', '', 'g')
   let type = ''
 
