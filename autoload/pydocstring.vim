@@ -63,7 +63,6 @@ function! s:parseFunc(type, line)
     let substring = strpart(a:line, arrowIndex + 2)
     " issue #28 `\W*` would deleted `.`.
     let returnType = substitute(substring, '[^0-9A-Za-z_.]*', '', 'g')
-    echomsg returnType
   else
     let returnType = ''
   endif
