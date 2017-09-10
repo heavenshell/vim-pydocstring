@@ -1,3 +1,15 @@
+Version 0.1.4
+-------------
+Released on Sep 10th 2017
+
+- Fix bug
+
+  Template does not exist exception at set wildignore=*.txt
+
+  see https://github.com/heavenshell/vim-pydocstring/pull/32
+
+  Thx @demonye
+
 Version 0.1.3
 -------------
 Released on Jul 18th 2017
