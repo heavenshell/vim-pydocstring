@@ -35,9 +35,9 @@ function! s:readtmpl(type)
     let tmpldir =  tmpldir . '/'
   endif
 
-  let path = expand(tmpldir . a:type . '.txt')
+  let path = expand(tmpldir) . a:type . '.txt'
   if !filereadable(path)
-    throw 'Template ' . path . ' is not exists.'
+    throw 'Template ' . path . ' does not exist.'
   endif
   let tmpl = readfile(path, 'b')
   return tmpl
