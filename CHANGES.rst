@@ -1,3 +1,16 @@
+Version 0.1.5
+-------------
+Released on Nov 18th 2017
+
+- Fix bug
+
+  - Invalid space after {{_header_}}
+  - Document's custom template section was wrong
+
+  see https://github.com/heavenshell/vim-pydocstring/issues/34
+
+  Thx @themightyoarfish
+
 Version 0.1.4
 -------------
 Released on Sep 10th 2017

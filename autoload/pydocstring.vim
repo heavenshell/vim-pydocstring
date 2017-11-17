@@ -1,6 +1,6 @@
 " Insert Docstring.
 " Author:      Shinya Ohyanagi <sohyanagi@gmail.com>
-" Version:     0.1.4
+" Version:     0.1.5
 " WebPage:     http://github.com/heavenshell/vim-pydocstriong/
 " Description: Generate Python docstring to your Python script file.
 " License:     BSD, see LICENSE for more details.
@@ -157,7 +157,6 @@ function! s:builddocstring(strs, indent, nested_indent)
     if line =~ '{{_header_}}'
       let header = substitute(line, '{{_header_}}', prefix, '')
       call add(docstrings, a:indent . header)
-      call add(docstrings, '')
     elseif line =~ '{{_args_}}'
       if len(args) != 0
         for arg in args
