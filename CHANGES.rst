@@ -1,3 +1,14 @@
+Version 0.1.6
+-------------
+Released on Nov 19th 2017
+
+- Minor changes
+
+  - Change function name camelCase to snake_case
+  - Change variable name camelCase to snake_case
+
+  see https://github.com/heavenshell/vim-pydocstring/issues/34
+
 Version 0.1.5
 -------------
 Released on Nov 18th 2017

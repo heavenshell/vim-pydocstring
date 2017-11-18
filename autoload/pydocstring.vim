@@ -1,6 +1,6 @@
 " Insert Docstring.
 " Author:      Shinya Ohyanagi <sohyanagi@gmail.com>
-" Version:     0.1.5
+" Version:     0.1.6
 " WebPage:     http://github.com/heavenshell/vim-pydocstriong/
 " Description: Generate Python docstring to your Python script file.
 " License:     BSD, see LICENSE for more details.
@@ -48,26 +48,26 @@ function! s:parseClass(line)
   " do that by just delete every white spaces and the whole parenthesics if
   " existed.
   let header = substitute(a:line, '\s\|(.*\|:', '', 'g')
-  let parse = {'type': 'class', 'header': header, 'args': '', 'returnType': ''}
+  let parse = {'type': 'class', 'header': header, 'args': '', 'return_type': ''}
   return parse
 endfunction
 
-function! s:parseFunc(type, line)
+function! s:parse_func(type, line)
   let header = substitute(a:line, '\s\|(.*\|:', '', 'g')
 
-  let argsStr = substitute(a:line, '\s\|.*(\|).*', '', 'g')
-  let args = split(argsStr, ',')
+  let args_str = substitute(a:line, '\s\|.*(\|).*', '', 'g')
+  let args = split(args_str, ',')
 
-  let arrowIndex = match(a:line, "->")
-  if arrowIndex != -1
-    let substring = strpart(a:line, arrowIndex + 2)
+  let arrow_index = match(a:line, "->")
+  if arrow_index != -1
+    let substring = strpart(a:line, arrow_index + 2)
     " issue #28 `\W*` would deleted `.`.
-    let returnType = substitute(substring, '[^0-9A-Za-z_.]*', '', 'g')
+    let return_type = substitute(substring, '[^0-9A-Za-z_.]*', '', 'g')
   else
-    let returnType = ''
+    let return_type = ''
   endif
 
-  let parse = {'type': a:type, 'header': header, 'args': args, 'returnType': returnType}
+  let parse = {'type': a:type, 'header': header, 'args': args, 'return_type': return_type}
   return parse
 endfunction
 
@@ -90,7 +90,7 @@ function! s:parse(line)
     return 0
   endif
 
-  return s:parseFunc(type, str)
+  return s:parse_func(type, str)
 endfunction
 
 " Vim Script does not support lambda function...
@@ -104,7 +104,7 @@ endfunction
 " Check if we should show args in the docstring. We won't do that in  case:
 " - There's no args.
 " - There's only one arg that match with g:pydocstring_ignore_args_pattern
-function! s:shouldIncludeArgs(args)
+function! s:should_include_args(args)
   if len(a:args) == 0
     return 0
   endif
@@ -124,25 +124,25 @@ endfunction
 "   g:pydocstring_ignore_args_pattern
 "
 " Return 1 for True, and 0 for False
-function! s:shouldUseOneLineDocString(type, args, returnType)
+function! s:should_use_one_line_docstring(type, args, return_type)
   if a:type != 'def'
     return 1
   endif
 
-  if a:returnType != ''
+  if a:return_type != ''
     return 0
   endif
 
-  return !s:shouldIncludeArgs(a:args)
+  return !s:should_include_args(a:args)
 endfunction
 
 function! s:builddocstring(strs, indent, nested_indent)
   let type  = a:strs['type']
   let prefix = a:strs['header']
   let args = a:strs['args']
-  let returnType = a:strs['returnType']
+  let return_type = a:strs['return_type']
 
-  if s:shouldUseOneLineDocString(type, args, returnType)
+  if s:should_use_one_line_docstring(type, args, return_type)
     return s:readoneline(a:indent, prefix)
   endif
 
@@ -150,7 +150,7 @@ function! s:builddocstring(strs, indent, nested_indent)
   let docstrings = []
   let lines = s:readtmpl('multi')
   let has_return_type = 0
-  if match(lines, '\c{{_returnType_}}') != -1
+  if match(lines, '\c{{_returnType_}}\|\c{{_return_type_}}') != -1
     let has_return_type = 1
   endif
   for line in lines
@@ -186,7 +186,7 @@ function! s:builddocstring(strs, indent, nested_indent)
             "   '''
             "   {{_header_}}
             "   :param {{_args_}}:
-            "   :rtype: {{_returnType_}}
+            "   :rtype: {{_return_type_}}
             "   '''
             let template = substitute(template, ':$', '', 'g')
           endif
@@ -203,9 +203,9 @@ function! s:builddocstring(strs, indent, nested_indent)
     elseif line =~ '{{_indent_}}'
       let arg = substitute(line, '{{_indent_}}', a:indent, 'g')
       call add(docstrings, arg)
-    elseif line =~ '{{_returnType_}}'
-      if strlen(returnType) != 0
-        let rt = substitute(line, '{{_returnType_}}', returnType, '')
+    elseif line =~ '{{_returnType_}}\|{{_return_type_}}'
+      if strlen(return_type) != 0
+        let rt = substitute(line, '{{_returnType_}}\|{{_return_type_}}', return_type, '')
         call add(docstrings, a:indent . rt)
       else
         call remove(docstrings, -1)

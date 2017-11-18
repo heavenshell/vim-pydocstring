@@ -7,5 +7,5 @@
 {{_indent_}}Returns
 {{_indent_}}-------
 
-returnVar : {{_returnType_}}
+returnVar : {{_return_type_}}
 """

@@ -7,7 +7,7 @@
 
 # If nvim is available in PATH, then we prefer to use nvim
 # since it works better with nodemon
-if  hash nvim 2>/dev/null ; then
+if hash nvim 2>/dev/null ; then
   VIM_EXE="nvim"
 fi
 

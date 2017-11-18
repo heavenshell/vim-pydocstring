@@ -1,6 +1,6 @@
 *pydocstring.txt*	Generate Python docstring to your Python code.
 
-Version: 0.1.5
+Version: 0.1.6
 Author: Shinya Ohynagi <sohyanagi@gmail.com>
 Repository: http://github.com/heavenshell/vim-pydocstring/
 License: BSD, see LICENSE for more details.
@@ -141,12 +141,13 @@ Template variables.
   |{{_lf_}}|		Assign line break.
   |{{_indent_}}|	Assign indent.
   |{{_nested_indent_}}|	Assign indent.
-  |{{_returnType_}}|	Function or method return type.
+  |{{_return_type_}}|	Function or method return type.
+  |{{_returnType_}}|	Same as |{{_return_type_}}||.
   |{{_name_}}|		Argument name, should only be used in `arg.txt`
   |{{_type_}}|		Argument type, should only be used in `arg.txt`
 
 There's some rules for parsing template:
-- `{{_header_}`, `{{_args}}` and `{{_returnType_}}` should be on their own
+- `{{_header_}`, `{{_args}}` and `{{_return_type_}}` should be on their own
   line.
 - Pydocstring will insert a emmpty line between each parts, so you don't
   need to include empty line in your template. Please see the default template
