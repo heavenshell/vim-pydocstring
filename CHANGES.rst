@@ -1,6 +1,15 @@
-Version 0.1.6
+Version 0.2.0
 -------------
 Released on Nov 19th 2017
+
+- Minor changes
+
+  - Notice template `{{_return_type_}}` does not add extra blank
+  - Now template shows as is
+
+Version 0.1.6
+-------------
+Released on Nov 18th 2017
 
 - Minor changes
 

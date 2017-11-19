@@ -26,7 +26,6 @@ Expect python:
         """foo
 
         :param sample_var:
-
         :rtype: str
         """
         pass
@@ -43,7 +42,6 @@ Expect python:
 
         :param arg1:
         :param arg2:
-
         :rtype: str
         """
         pass
@@ -61,7 +59,6 @@ Expect python:
 
         :param n:
         :type n: int
-
         :rtype: int
         """
         pass
@@ -81,7 +78,6 @@ Expect python:
         :type n: int
         :param m:
         :type m: str
-
         :rtype: int
         """
         pass
@@ -101,7 +97,6 @@ Expect python:
         :param n:
         :type n: int
         :param arg:
-
         :rtype: int
         """
         pass

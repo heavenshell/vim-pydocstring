@@ -1,6 +1,6 @@
 " Insert Docstring.
 " Author:      Shinya Ohyanagi <sohyanagi@gmail.com>
-" Version:     0.1.6
+" Version:     0.2.0
 " WebPage:     http://github.com/heavenshell/vim-pydocstriong/
 " Description: Generate Python docstring to your Python script file.
 " License:     BSD, see LICENSE for more details.
@@ -149,10 +149,6 @@ function! s:builddocstring(strs, indent, nested_indent)
   let tmpl = ''
   let docstrings = []
   let lines = s:readtmpl('multi')
-  let has_return_type = 0
-  if match(lines, '\c{{_returnType_}}\|\c{{_return_type_}}') != -1
-    let has_return_type = 1
-  endif
   for line in lines
     if line =~ '{{_header_}}'
       let header = substitute(line, '{{_header_}}', prefix, '')
@@ -167,10 +163,10 @@ function! s:builddocstring(strs, indent, nested_indent)
           let template = line
           let typed = 0
           if match(arg, ':') != -1
-            let argTemplate = join(s:readtmpl('arg'), '')
-            let argParts = split(arg, ':')
-            let argTemplate = substitute(argTemplate, '{{_name_}}', argParts[0], 'g')
-            let arg = substitute(argTemplate, '{{_type_}}', argParts[1], 'g')
+            let arg_template = join(s:readtmpl('arg'), '')
+            let arg_parts = split(arg, ':')
+            let arg_template = substitute(arg_template, '{{_name_}}', arg_parts[0], 'g')
+            let arg = substitute(arg_template, '{{_type_}}', arg_parts[1], 'g')
             let typed = 1
           endif
           let template = substitute(template, '{{_args_}}', arg, 'g')
@@ -196,9 +192,6 @@ function! s:builddocstring(strs, indent, nested_indent)
           let template = substitute(template, '\s$', '', '')
           call add(docstrings, a:indent . template)
         endfor
-        if has_return_type == 1
-          call add(docstrings, '')
-        endif
       endif
     elseif line =~ '{{_indent_}}'
       let arg = substitute(line, '{{_indent_}}', a:indent, 'g')
@@ -208,7 +201,9 @@ function! s:builddocstring(strs, indent, nested_indent)
         let rt = substitute(line, '{{_returnType_}}\|{{_return_type_}}', return_type, '')
         call add(docstrings, a:indent . rt)
       else
-        call remove(docstrings, -1)
+        if docstrings[-1] == ''
+          call remove(docstrings, -1)
+        endif
       endif
     elseif line == '"""' || line == "'''"
       call add(docstrings, a:indent . line)

@@ -1,3 +1,5 @@
+sudo: false
+dist: trusty
 language: vim
 
 install:
@@ -7,7 +9,7 @@ install:
   - mkdir ~/tmp
   - cd /tmp/vim
   - sudo apt-get install -y gettext libncurses5-dev libacl1-dev libgpm-dev
-  - ./configure --with-features=huge --enable-fail-if-missing --enable-pythoninterp --prefix=$HOME/tmp/vim
+  - ./configure --with-features=huge --enable-fail-if-missing --enable-pythoninterp --prefix=$HOME/tmp/vim --disable-gui
   - make && make install
   - git clone https://github.com/junegunn/vader.vim.git
   - export VIM_EXE=$HOME/tmp/vim/bin/vim
