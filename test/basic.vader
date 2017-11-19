@@ -208,7 +208,6 @@ Expect python:
       :type weights: tuple
       :param coords:
       :type coords: numpy.ndarray
-
       :rtype: numpy.ndarray
       """
       pass
