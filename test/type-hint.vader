@@ -101,3 +101,149 @@ Expect python:
         """
         pass
 
+Given python (def foo 1 arg with type return Callable[int, str]):
+    def foo(arg1: Callable[int, str]) -> List[int, str]:
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(arg1: Callable[int, str]) -> List[int, str]:
+        """foo
+
+        :param arg1:
+        :type arg1: Callable[int, str]
+        :rtype: List[int, str]
+        """
+        pass
+
+Given python (def foo nested typed args):
+    def foo(
+        arg1: str,
+        arg2: Callable[List[str, str], str, int],
+        arg3,
+        arg4: int,
+        arg5,
+        arg6: List[str, str, str]
+    ):
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(
+        arg1: str,
+        arg2: Callable[List[str, str], str, int],
+        arg3,
+        arg4: int,
+        arg5,
+        arg6: List[str, str, str]
+    ):
+        """foo
+
+        :param arg1:
+        :type arg1: str
+        :param arg2:
+        :type arg2: Callable[List[str, str], str, int]
+        :param arg3:
+        :param arg4:
+        :type arg4: int
+        :param arg5:
+        :param arg6:
+        :type arg6: List[str, str, str]
+        """
+        pass
+
+
+
+Given python (def foo typed args):
+    def foo(arg1: str, arg2: int) -> str:
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(arg1: str, arg2: int) -> str:
+        """foo
+
+        :param arg1:
+        :type arg1: str
+        :param arg2:
+        :type arg2: int
+        :rtype: str
+        """
+        pass
+
+Given python (def foo last arg is not typed):
+    def foo(n: int, arg2: str, arg3):
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(n: int, arg2: str, arg3):
+        """foo
+
+        :param n:
+        :type n: int
+        :param arg2:
+        :type arg2: str
+        :param arg3:
+        """
+        pass
+
+Given python (def foo last arg typed):
+    def foo(
+        arg,
+        arg1: str,
+        arg2: Callable[List[str, str], str, int],
+        arg3,
+        arg4: int
+    ):
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(
+        arg,
+        arg1: str,
+        arg2: Callable[List[str, str], str, int],
+        arg3,
+        arg4: int
+    ):
+        """foo
+
+        :param arg:
+        :param arg1:
+        :type arg1: str
+        :param arg2:
+        :type arg2: Callable[List[str, str], str, int]
+        :param arg3:
+        :param arg4:
+        :type arg4: int
+        """
+        pass
+
+Given python (def foo last arg is nest typed):
+    def foo(arg1: str, arg2: Callable[List[str, str], str, int]):
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(arg1: str, arg2: Callable[List[str, str], str, int]):
+        """foo
+
+        :param arg1:
+        :type arg1: str
+        :param arg2:
+        :type arg2: Callable[List[str, str], str, int]
+        """
+        pass

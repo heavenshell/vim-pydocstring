@@ -1,6 +1,6 @@
 " Insert Docstring.
 " Author:      Shinya Ohyanagi <sohyanagi@gmail.com>
-" Version:     0.2.0
+" Version:     0.3.0
 " WebPage:     http://github.com/heavenshell/vim-pydocstriong/
 " Description: Generate Python docstring to your Python script file.
 " License:     BSD, see LICENSE for more details.
@@ -25,7 +25,8 @@ endif
 let s:regexs = {
       \ 'def': '^def\s\|^\s*def\s',
       \ 'class': '^class\s\|^\s*class\s',
-      \ 'async': '^async\s*def\s\|^\s*async\sdef\s'
+      \ 'async': '^async\s*def\s\|^\s*async\sdef\s',
+      \ 'typed_args': '\([0-9A-Za-z_.]\+:[0-9A-Za-z_.]\+\|[0-9A-Za-z_.]\+\)\(,\|$\)',
       \ }
 
 function! s:readtmpl(type)
@@ -43,7 +44,7 @@ function! s:readtmpl(type)
   return tmpl
 endfunction
 
-function! s:parseClass(line)
+function! s:parse_class(line)
   " For class definition, we just simply need to extract the class name.  We can
   " do that by just delete every white spaces and the whole parenthesics if
   " existed.
@@ -52,22 +53,129 @@ function! s:parseClass(line)
   return parse
 endfunction
 
+function! s:compare(lhs, rhs)
+  return a:lhs['start'] - a:rhs['start']
+endfunction
+
+function! s:parse_args(args_str)
+  let primitive_pos = 0
+  let nested = 0
+  let start_pos = 0
+  let end_pos = 0
+  let args = []
+  let primitives = []
+
+  " Extract none typed arguments or primitive arguments first.
+  while 1
+    let primitives = matchstrpos(a:args_str, s:regexs['typed_args'], primitive_pos)
+    if primitives[1] == -1
+      break
+    endif
+
+    if match(primitives[0], '[0-9A-Za-z_.]\+:[0-9A-Za-z_.]\+') == -1
+      let separator_pos = strridx(a:args_str, ':', primitives[1])
+      if a:args_str[primitives[1] - 1 : primitives[1] - 1] == '['
+        " If `[` exist right before argument, current argument is inner of
+        " braket. So this argument is not standalone argument.
+        let primitive_pos = primitives[2]
+        continue
+      endif
+      let braket_start_pos = stridx(a:args_str, '[', separator_pos)
+      let next_separator_pos = stridx(a:args_str, ':', primitives[2])
+      let braket_end_pos = strridx(a:args_str, ']', next_separator_pos)
+      if next_separator_pos == -1
+        if braket_start_pos == -1 && braket_end_pos == -1
+              \ && a:args_str[primitives[1] : ] == primitives[0]
+          " Current argument is last argument.
+        else
+          " Arguments are still remains.
+          let primitive_pos = primitives[2]
+          continue
+        endif
+      endif
+
+      if braket_start_pos < primitives[1] && primitives[1] < braket_end_pos
+        " Current argument is inner of braket,
+        " such as `List[str, str, str]`'s second `str`.
+        let primitive_pos = primitives[2]
+        continue
+      endif
+    endif
+
+    " `[: -1] trims `,`.
+    let arg = primitives[0][: -1]
+    let arg = substitute(arg, ',$', '', '')
+
+    call add(args, {'val': arg, 'start': primitives[1]})
+    " Move current position.
+    let primitive_pos = primitives[2]
+  endwhile
+
+  " Parse nested typed args.
+  while 1
+    let start_idx = match(a:args_str, '\[', start_pos)
+    let end_idx = match(a:args_str, '\]', end_pos)
+
+    if start_idx == -1 && end_idx == -1
+      break
+    endif
+
+    if end_pos > start_idx
+      " For nested. e.g. `arg: List[List[List[int, int], List[List[int, int]]]`.
+      let idx = strridx(a:args_str, ',', nested)
+      if idx == -1
+        let idx = strridx(a:args_str, '(', nested)
+      endif
+      let arg = a:args_str[idx + 1 : end_idx]
+      " Override previous arg by complete one.
+      let args[-1] = {'val': arg, 'start': idx + 1}
+    else
+      let idx = strridx(a:args_str, ',', start_idx)
+      if idx == -1
+        let idx = strridx(a:args_str, '(', start_idx)
+      endif
+
+      let arg = a:args_str[idx + 1 : end_idx]
+      call add(args, {'val': arg, 'start': idx + 1})
+      let nested = start_idx
+    endif
+
+    let start_pos = start_idx + 1
+    let end_pos = end_idx + 1
+  endwhile
+
+  " Sort by argument start position.
+  call sort(args, 's:compare')
+  return map(args, {i, v -> substitute(v['val'], ',', ', ', 'g')})
+endfunction
+
 function! s:parse_func(type, line)
   let header = substitute(a:line, '\s\|(.*\|:', '', 'g')
 
   let args_str = substitute(a:line, '\s\|.*(\|).*', '', 'g')
-  let args = split(args_str, ',')
+  if args_str =~ ':'
+    let args = s:parse_args(args_str)
+  else
+    " No typed args.
+    let args = split(args_str, ',')
+  endif
 
-  let arrow_index = match(a:line, "->")
+  let arrow_index = match(a:line, '->')
+  let return_type = ''
   if arrow_index != -1
     let substring = strpart(a:line, arrow_index + 2)
     " issue #28 `\W*` would deleted `.`.
-    let return_type = substitute(substring, '[^0-9A-Za-z_.]*', '', 'g')
-  else
-    let return_type = ''
+    let return_type = substitute(substring, '[^0-9A-Za-z_.,\[\]]*', '', 'g')
+    " Add space after `,` such as `List[int, str]`.
+    let return_type = substitute(return_type, ',', ', ', '')
   endif
 
-  let parse = {'type': a:type, 'header': header, 'args': args, 'return_type': return_type}
+  let parse = {
+        \ 'type': a:type,
+        \ 'header': header,
+        \ 'args': args,
+        \ 'return_type': return_type
+        \ }
   return parse
 endfunction
 
@@ -77,7 +185,7 @@ function! s:parse(line)
 
   if str =~ s:regexs['class']
     let str = substitute(str, s:regexs['class'], '', '')
-    return s:parseClass(str)
+    return s:parse_class(str)
   endif
 
   if str =~ s:regexs['def']
@@ -136,7 +244,7 @@ function! s:should_use_one_line_docstring(type, args, return_type)
   return !s:should_include_args(a:args)
 endfunction
 
-function! s:builddocstring(strs, indent, nested_indent)
+function! s:build_docstring(strs, indent, nested_indent)
   let type  = a:strs['type']
   let prefix = a:strs['header']
   let args = a:strs['args']
@@ -242,7 +350,7 @@ function! pydocstring#insert()
       let indent = indent . space
     endif
     try
-      let result = s:builddocstring(docstring, indent, nested_indent)
+      let result = s:build_docstring(docstring, indent, nested_indent)
       call s:insert(insertpos + 1, result)
     catch /^Template/
       echomsg v:exception
@@ -257,9 +365,9 @@ function! s:insert(pos, docstring)
   let paste = &g:paste
   let &g:paste = 1
   silent! execute 'normal! ' . a:pos . 'G$'
-  let currentpos = line('.')
+  let current_pos = line('.')
   " If current position is bottom, add docstring below.
-  if a:pos == currentpos
+  if a:pos == current_pos
     silent! execute 'normal! O' . a:docstring
   else
     silent! execute 'normal! o' . a:docstring
