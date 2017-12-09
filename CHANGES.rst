@@ -1,3 +1,15 @@
+Version 0.3.0
+-------------
+Released on Dec 10th 2017
+
+- Bug fix
+
+  - Nested typed args(e.g `List[int, int, int]`) are broken
+  - Cosmetic changes
+
+  see https://github.com/heavenshell/vim-pydocstring/issues/40
+
+
 Version 0.2.0
 -------------
 Released on Nov 19th 2017
