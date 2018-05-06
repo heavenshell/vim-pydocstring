@@ -247,3 +247,39 @@ Expect python:
         :type arg2: Callable[List[str, str], str, int]
         """
         pass
+
+Given python (def first has type, the rest is not):
+    def foo(a: int, b, c) -> int:
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(a: int, b, c) -> int:
+        """foo
+
+        :param a:
+        :type a: int
+        :param b:
+        :param c:
+        :rtype: int
+        """
+        pass
+
+Given python (keyword args):
+    def foo(a, b: str = None):
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(a, b: str = None):
+        """foo
+
+        :param a:
+        :param b:
+        :type b: str
+        """
+        pass
