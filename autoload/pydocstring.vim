@@ -153,8 +153,10 @@ function! s:parse_func(type, line)
   let header = substitute(a:line, '\s\|(.*\|:', '', 'g')
 
   let args_str = substitute(a:line, '\s\|.*(\|).*', '', 'g')
-  if args_str =~ ':'
+  if args_str =~ ':' && args_str =~ '['
     let args = s:parse_args(args_str)
+  elseif args_str =~ ':'
+    let args = split(args_str, ',')
   else
     " No typed args.
     let args = split(args_str, ',')
