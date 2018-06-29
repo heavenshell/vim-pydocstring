@@ -27,6 +27,9 @@ let s:regexs = {
       \ 'class': '^class\s\|^\s*class\s',
       \ 'async': '^async\s*def\s\|^\s*async\sdef\s',
       \ 'typed_args': '\([0-9A-Za-z_.]\+:[0-9A-Za-z_.]\+\|[0-9A-Za-z_.]\+\)\(,\|$\)',
+      \ 'typed_bracket': '\(\w\+\s*:\s*\w\+\[.*\],\|\w\+\s*:\s*\w\+\[.*\]\)',
+      \ 'typed_primitive': '\(\w\+:\s*\w\+,\|\w\+:\s*\w\+\)',
+      \ 'none_typed': '\w\+,',
       \ }
 
 function! s:readtmpl(type)
@@ -58,93 +61,95 @@ function! s:compare(lhs, rhs)
 endfunction
 
 function! s:parse_args(args_str)
-  let primitive_pos = 0
-  let nested = 0
-  let start_pos = 0
-  let end_pos = 0
+  " FIXME Very very work around.
+  " If Python2 is dead, consider to use Python interface
+  let args_str = copy(a:args_str)
   let args = []
-  let primitives = []
+  let pos = len(args_str)
 
-  " Extract none typed arguments or primitive arguments first.
+  " If last argument is none-typed or bracket typed(e.g. List[int]),
+  " Add to args first.
   while 1
-    let primitives = matchstrpos(a:args_str, s:regexs['typed_args'], primitive_pos)
-    if primitives[1] == -1
+    let comma_idx = strridx(args_str, ',', pos)
+    if comma_idx == -1
+      " No multipul args left.
       break
-    endif
-
-    if match(primitives[0], '[0-9A-Za-z_.]\+:[0-9A-Za-z_.]\+') == -1
-      let separator_pos = strridx(a:args_str, ':', primitives[1])
-      if a:args_str[primitives[1] - 1 : primitives[1] - 1] == '['
-        " If `[` exist right before argument, current argument is inner of
-        " braket. So this argument is not standalone argument.
-        let primitive_pos = primitives[2]
-        continue
-      endif
-      let braket_start_pos = stridx(a:args_str, '[', separator_pos)
-      let next_separator_pos = stridx(a:args_str, ':', primitives[2])
-      let braket_end_pos = strridx(a:args_str, ']', next_separator_pos)
-      if next_separator_pos == -1
-        if braket_start_pos == -1 && braket_end_pos == -1
-              \ && a:args_str[primitives[1] : ] == primitives[0]
-          " Current argument is last argument.
-        else
-          " Arguments are still remains.
-          let primitive_pos = primitives[2]
-          continue
+    end
+    let idx = stridx(args_str, ':', comma_idx)
+    if idx == -1
+      let last_arg = args_str[comma_idx + 1 :]
+      if last_arg =~ ']'
+        let sep_pos = strridx(args_str, ':', pos)
+        let comma_idx = strridx(args_str, ',', sep_pos)
+        if comma_idx == -1
+          " One argument left
+          break
         endif
+        " Last argument is typed and have `[]`.
+        let last_arg = args_str[comma_idx + 1 :]
+        let last_arg = substitute(last_arg, ',\s*$', '', '')
+
+        call add(args, {'val': last_arg, 'start': comma_idx})
+        let args_str = args_str[ : comma_idx]
+
+        break
+      else
+        " Last argument is not none-typed.
+        let last_arg = substitute(last_arg, ',\s*$', '', '')
+        call add(args, {'val': last_arg, 'start': comma_idx})
+        let arg_length = len(last_arg)
+        let args_str = args_str[ : comma_idx]
       endif
-
-      if braket_start_pos < primitives[1] && primitives[1] < braket_end_pos
-        " Current argument is inner of braket,
-        " such as `List[str, str, str]`'s second `str`.
-        let primitive_pos = primitives[2]
-        continue
-      endif
-    endif
-
-    " `[: -1] trims `,`.
-    let arg = primitives[0][: -1]
-    let arg = substitute(arg, ',$', '', '')
-
-    call add(args, {'val': arg, 'start': primitives[1]})
-    " Move current position.
-    let primitive_pos = primitives[2]
-  endwhile
-
-  " Parse nested typed args.
-  while 1
-    let start_idx = match(a:args_str, '\[', start_pos)
-    let end_idx = match(a:args_str, '\]', end_pos)
-
-    if start_idx == -1 && end_idx == -1
+      let pos = comma_idx - 1
+    else
       break
     endif
-
-    if end_pos > start_idx
-      " For nested. e.g. `arg: List[List[List[int, int], List[List[int, int]]]`.
-      let idx = strridx(a:args_str, ',', nested)
-      if idx == -1
-        let idx = strridx(a:args_str, '(', nested)
-      endif
-      let arg = a:args_str[idx + 1 : end_idx]
-      " Override previous arg by complete one.
-      let args[-1] = {'val': arg, 'start': idx + 1}
-    else
-      let idx = strridx(a:args_str, ',', start_idx)
-      if idx == -1
-        let idx = strridx(a:args_str, '(', start_idx)
-      endif
-
-      let arg = a:args_str[idx + 1 : end_idx]
-      call add(args, {'val': arg, 'start': idx + 1})
-      let nested = start_idx
-    endif
-
-    let start_pos = start_idx + 1
-    let end_pos = end_idx + 1
   endwhile
 
-  " Sort by argument start position.
+  while 1
+    "" Parse like `arg: List[str]`
+    let bracket_match = match(args_str, s:regexs['typed_bracket'])
+    if bracket_match != -1
+      let ret = matchstrpos(args_str, s:regexs['typed_bracket'])
+      let arg_length = len(ret[0])
+      let pos = printf('@%s%s,', ret[1], repeat(' ', arg_length - len(arg_length) - 1))
+
+      let args_str = substitute(args_str, s:regexs['typed_bracket'], pos, '')
+      let arg = substitute(ret[0], ',$', '', '')
+      call add(args, {'val': arg, 'start': ret[1]})
+    endif
+
+    " Parse like `arg1: str`
+    let primitive_match = match(args_str, s:regexs['typed_primitive'])
+    if primitive_match != -1
+      let ret = matchstrpos(args_str, s:regexs['typed_primitive'])
+      let arg_length = len(ret[0])
+      let pos = printf('@%s%s,', ret[1], repeat(' ', arg_length - len(arg_length) - 2))
+      let args_str = substitute(args_str, s:regexs['typed_primitive'], pos, '')
+      let arg = substitute(ret[0], ',$', '', '')
+      call add(args, {'val': arg, 'start': ret[1]})
+    endif
+
+    " Parse like `arg`
+    let none_typed_match = match(args_str, s:regexs['none_typed'])
+    if none_typed_match != -1
+      if match(args_str, '[A-Za-z]') == -1
+        break
+      endif
+
+      let ret = matchstrpos(args_str, s:regexs['none_typed'])
+      let arg_length = len(ret[0])
+      let pos = printf('@%s%s,', ret[1], repeat(' ', arg_length - len(arg_length) - 1))
+      let args_str = substitute(args_str, s:regexs['none_typed'], pos, '')
+      let arg = substitute(ret[0], ',$', '', '')
+      call add(args, {'val': arg, 'start': ret[1]})
+    endif
+
+    if bracket_match == -1 && primitive_match == -1 && none_typed_match == -1
+      break
+    endif
+  endwhile
+
   call sort(args, 's:compare')
   return map(args, {i, v -> substitute(v['val'], ',', ', ', 'g')})
 endfunction
