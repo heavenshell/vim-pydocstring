@@ -1,3 +1,13 @@
+Version 0.5.0
+-------------
+Released on Jun 30th 2018
+
+- Bug fix
+
+  - Generate missing param
+
+  see https://github.com/heavenshell/vim-pydocstring/issues/44
+
 Version 0.4.0
 -------------
 Released on May 6th 2018
