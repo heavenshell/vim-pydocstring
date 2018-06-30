@@ -1,3 +1,15 @@
+Version 0.6.0
+-------------
+Released on Jun 30th 2018
+
+- Bug fix
+
+  - indent doesn't work with `{{_return_type_}}` or `{{_nested_indent_}}`
+
+  see https://github.com/heavenshell/vim-pydocstring/issues/51
+
+  Thx @JPFrancoia
+
 Version 0.5.0
 -------------
 Released on Jun 30th 2018
