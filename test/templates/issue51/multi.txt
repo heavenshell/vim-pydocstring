@@ -1,0 +1,8 @@
+"""{{_header_}}
+
+{{_indent_}}Args:
+{{_nested_indent_}}{{_args_}}:
+
+{{_indent_}}Returns:
+{{_nested_indent_}}{{_return_type_}}
+"""

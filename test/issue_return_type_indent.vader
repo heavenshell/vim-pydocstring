@@ -1,0 +1,67 @@
+# vim:set et sw=4 ts=4 tw=79:
+Execute (Setup template dir):
+    Save g:pydocstring_templates_dir
+    let g:pydocstring_templates_dir = './templates/issue51/'
+
+Given python (def foo with 1 params):
+    def foo(arg1):
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(arg1):
+        """foo
+
+        Args:
+            arg1:
+
+        Returns:
+        """
+        pass
+
+
+Given python (def foo with 2 params):
+    def foo(arg1, arg2):
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(arg1, arg2):
+        """foo
+
+        Args:
+            arg1:
+            arg2:
+
+        Returns:
+        """
+        pass
+
+
+Given python (return type):
+    def foo(arg1: str, arg2: int) -> bool:
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def foo(arg1: str, arg2: int) -> bool:
+        """foo
+
+        Args:
+            arg1 (str):
+            arg2 (int):
+
+        Returns:
+            bool
+        """
+        pass
+
+
+Execute (Clear pydocstring_templates_dir):
+    Restore

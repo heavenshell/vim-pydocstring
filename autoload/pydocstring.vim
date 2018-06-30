@@ -1,6 +1,6 @@
 " Insert Docstring.
 " Author:      Shinya Ohyanagi <sohyanagi@gmail.com>
-" Version:     0.5.0
+" Version:     0.6.0
 " WebPage:     http://github.com/heavenshell/vim-pydocstriong/
 " Description: Generate Python docstring to your Python script file.
 " License:     BSD, see LICENSE for more details.
@@ -308,11 +308,10 @@ function! s:build_docstring(strs, indent, nested_indent)
           call add(docstrings, a:indent . template)
         endfor
       endif
-    elseif line =~ '{{_indent_}}'
-      let arg = substitute(line, '{{_indent_}}', a:indent, 'g')
-      call add(docstrings, arg)
-    elseif line =~ '{{_returnType_}}\|{{_return_type_}}'
+    elseif match(line, '{{_returnType_}}\|{{_return_type_}}') != -1
       if strlen(return_type) != 0
+        let line = substitute(line, '{{_indent_}}', a:indent, 'g')
+        let line = substitute(line, '{{_nested_indent_}}', a:nested_indent, 'g')
         let rt = substitute(line, '{{_returnType_}}\|{{_return_type_}}', return_type, '')
         call add(docstrings, a:indent . rt)
       else
@@ -320,6 +319,9 @@ function! s:build_docstring(strs, indent, nested_indent)
           call remove(docstrings, -1)
         endif
       endif
+    elseif line =~ '{{_indent_}}'
+      let arg = substitute(line, '{{_indent_}}', a:indent, 'g')
+      call add(docstrings, arg)
     elseif line == '"""' || line == "'''"
       call add(docstrings, a:indent . line)
     else
