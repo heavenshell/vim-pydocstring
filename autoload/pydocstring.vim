@@ -60,7 +60,7 @@ function! s:compare(lhs, rhs)
   return a:lhs['start'] - a:rhs['start']
 endfunction
 
-function! s:parse_args(args_str)
+function! s:parse_args_with_types(args_str)
   " FIXME Very very work around.
   " If Python2 is dead, consider to use Python interface
   let args_str = copy(a:args_str)
@@ -154,11 +154,33 @@ function! s:parse_args(args_str)
   return map(args, {i, v -> substitute(v['val'], ',', ', ', 'g')})
 endfunction
 
+function! s:parse_args(args_str) abort
+  " TODO FIXME Work around
+  let args_str = copy(a:args_str)
+
+  let args_str = substitute(args_str, '"', "'", 'g')
+
+  let pattern = "'[A-z0-9_-]\+':[A-z0-9.-_]\+"
+  let args_str = substitute(args_str, "\\v'[A-z0-9_-]\+':[A-z0-9.-_'\"]\+", '', 'g')
+  let args_str = substitute(args_str, '=\({,\+}\|{}\)', '', 'g')
+  let args_str = substitute(args_str, '\[.*]', '', 'g')
+  let args = split(args_str, ',')
+
+  return args
+endfunction
+
 function! s:parse_func(type, line)
   let header = substitute(a:line, '\s\|(.*\|:', '', 'g')
 
   let args_str = substitute(a:line, '\s\|.*(\|).*', '', 'g')
   if args_str =~ ':' && args_str =~ '['
+    echomsg match(args_str, '[A-z0-9_$]\+:')
+    if match(args_str, '[A-z0-9_$]\+:') >= 0
+      let args = s:parse_args_with_types(args_str)
+    else
+      let args = s:parse_args(args_str)
+    endif
+  elseif args_str =~ '=' && (args_str =~ '{' || args_str =~ '[')
     let args = s:parse_args(args_str)
   elseif args_str =~ ':'
     let args = split(args_str, ',')
