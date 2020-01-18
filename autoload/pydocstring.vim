@@ -174,7 +174,6 @@ function! s:parse_func(type, line)
 
   let args_str = substitute(a:line, '\s\|.*(\|).*', '', 'g')
   if args_str =~ ':' && args_str =~ '['
-    echomsg match(args_str, '[A-z0-9_$]\+:')
     if match(args_str, '[A-z0-9_$]\+:') >= 0
       let args = s:parse_args_with_types(args_str)
     else
