@@ -1,0 +1,87 @@
+# vim:set et sw=4 ts=4 tw=79:
+Given python (def foo with dict params):
+    def get_adjacency(
+        facets,
+        points=None,
+        max_degree=None,
+        dtypes={'ints': np.int64, 'floats': np.float32},
+    ):
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def get_adjacency(
+        facets,
+        points=None,
+        max_degree=None,
+        dtypes={'ints': np.int64, 'floats': np.float32},
+    ):
+        """get_adjacency
+
+        :param facets:
+        :param points:
+        :param max_degree:
+        :param dtypes:
+        """
+        pass
+
+Given python (def foo with list params):
+    def get_adjacency(
+        facets,
+        points=None,
+        max_degree=None,
+        dtypes=['ints', 'floats'],
+    ):
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def get_adjacency(
+        facets,
+        points=None,
+        max_degree=None,
+        dtypes=['ints', 'floats'],
+    ):
+        """get_adjacency
+
+        :param facets:
+        :param points:
+        :param max_degree:
+        :param dtypes:
+        """
+        pass
+
+Given python (def foo with list and dict params):
+    def get_adjacency(
+        facets,
+        points=None,
+        max_degree=None,
+        dtypes={'ints': np.int64, 'floats': np.float32},
+        etypes=['ints', 'floats'],
+    ):
+        pass
+
+Execute:
+    Pydocstring
+
+Expect python:
+    def get_adjacency(
+        facets,
+        points=None,
+        max_degree=None,
+        dtypes={'ints': np.int64, 'floats': np.float32},
+        etypes=['ints', 'floats'],
+    ):
+        """get_adjacency
+
+        :param facets:
+        :param points:
+        :param max_degree:
+        :param dtypes:
+        :param etypes:
+        """
+        pass
