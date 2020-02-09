@@ -1,4 +1,11 @@
+Version 1.0.0
+-------------
+Released on Feb 9th 2020
+
+Last version of pure Vim script
+
 Version 0.7.0
+-------------
 Released on Jan 18th 2020
 
 - Bug fix
