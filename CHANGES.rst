@@ -1,3 +1,14 @@
+Version 0.7.0
+Released on Jan 18th 2020
+
+- Bug fix
+
+  - default value as dict create wrong docstring
+
+  see https://github.com/heavenshell/vim-pydocstring/issues/61
+
+  Thx @LucaZampieri
+
 Version 0.6.0
 -------------
 Released on Jun 30th 2018
