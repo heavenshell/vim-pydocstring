@@ -3,3 +3,5 @@
 .DS_Store
 tags
 vader.vim/
+venv/
+doq
