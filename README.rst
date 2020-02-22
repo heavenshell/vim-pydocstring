@@ -31,11 +31,14 @@ If you want install doq manually, you can install from PyPi.
   $ python3 -m venv ./venv
   $ ./venv/bin/pip3 install doq
 
-Than set installed `doq` path to `g:pydocstring_doq_path`.
+Than set installed `doq <https://pypi.org/project/doq/>`_. path to `g:pydocstring_doq_path`.
 
-.. note::
 
-  pydocstring is now support only Vim8.
+Note
+~~~~
+
+pydocstring is now support only Vim8.
+If you want use old version checkout `1.0.0 <https://github.com/heavenshell/vim-pydocstring/releases/tag/1.0.0>`_
 
 Basic usage
 -----------
