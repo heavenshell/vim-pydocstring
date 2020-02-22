@@ -23,5 +23,5 @@ before_script:
 
 script:
   - cd tests
-  - ./run.sh > /dev/null && echo Success || echo Fail
+  - ./run.sh
   - cd ..
