@@ -1,6 +1,6 @@
 " File:     pydocstring.vim
 " Author:   Shinya Ohyanagi <sohyanagi@gmail.com>
-" Version:  1.0.0
+" Version:  2.0.0
 " WebPage:  http://github.com/heavenshell/vim-pydocstriong/
 " Description: Generate Python docstring to your Python script file.
 " License: BSD, see LICENSE for more details.
@@ -8,7 +8,14 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-command! -nargs=0 -buffer -complete=customlist,pydocstring#insert Pydocstring call pydocstring#insert()
+" version check
+if !has('channel') || !has('job')
+  echoerr '+channel and +job are required for pydocstring.vim'
+  finish
+endif
+
+command! -nargs=0 -range=0 -complete=customlist,pydocstring#insert Pydocstring call pydocstring#insert(<q-args>, <count>, <line1>, <line2>)
+command! -nargs=0 -complete=customlist,pydocstring#format PydocstringFormat call pydocstring#format()
 
 if !exists('g:pydocstring_enable_mapping')
   let g:pydocstring_enable_mapping = 1

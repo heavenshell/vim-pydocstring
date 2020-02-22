@@ -1,0 +1,57 @@
+# vim:set et sw=4 ts=4 tw=79:
+
+Execute (Setup template dir):
+    Save g:pydocstring_formatter
+    let g:pydocstring_formatter = 'google'
+
+Given python (def foo):
+    def foo():
+        pass
+
+Execute:
+    :Pydocstring
+    :sleep 1
+
+Expect python:
+    def foo():
+        """foo.
+        """
+        pass
+
+Given python (def foo with 1 param):
+    def foo(arg):
+        pass
+
+Execute:
+    :Pydocstring
+    :sleep 500m
+
+Expect python:
+    def foo(arg):
+        """foo.
+
+        Args:
+            arg:
+        """
+        pass
+
+Given python (def foo with 2 params and type hints):
+    def foo(arg1: str, arg2: int) -> int:
+        pass
+
+Execute:
+    :Pydocstring
+    :sleep 500m
+
+Expect python:
+    def foo(arg1: str, arg2: int) -> int:
+        """foo.
+
+        Args:
+            arg1 (str): arg1
+            arg2 (int): arg2
+
+        Returns:
+            int:
+        """
+        pass

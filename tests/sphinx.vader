@@ -1,5 +1,9 @@
 # vim:set et sw=4 ts=4 tw=79:
 
+Execute (Setup template dir):
+    Save g:pydocstring_formatter
+    let g:pydocstring_formatter = 'sphinx'
+
 # Test def keyword
 #-------------------------------------------------------------------------------
 Given python (def foo):
@@ -7,11 +11,12 @@ Given python (def foo):
         pass
 
 Execute:
-    Pydocstring
+    :Pydocstring
+    :sleep 1
 
 Expect python:
     def foo():
-        """foo"""
+        """foo."""
         pass
 
 Given python (def foo with 1 param):
@@ -19,11 +24,12 @@ Given python (def foo with 1 param):
         pass
 
 Execute:
-    Pydocstring
+    :Pydocstring
+    :sleep 500m
 
 Expect python:
     def foo(arg):
-        """foo
+        """foo.
 
         :param arg:
         """
@@ -34,11 +40,12 @@ Given python (def foo with 2 params):
         pass
 
 Execute:
-    Pydocstring
+    :Pydocstring
+    :sleep 500m
 
 Expect python:
     def foo(arg1, arg2):
-        """foo
+        """foo.
 
         :param arg1:
         :param arg2:
@@ -50,47 +57,49 @@ Given python (def foo with 2 params and a comment block):
         pass
 
 Execute:
-    Pydocstring
+    :Pydocstring
+    :sleep 500m
 
 Expect python:
     def foo(arg1, arg2): # Something fun (just, for, test)
-        """foo
+        """foo.
 
         :param arg1:
         :param arg2:
         """
         pass
 
-
 Given python (def foo with variadic params):
     def foo(*arg):
         pass
 
 Execute:
-    Pydocstring
+    :Pydocstring
+    :sleep 500m
+
 Expect python:
     def foo(*arg):
-        """foo
+        """foo.
 
-        :param *arg:
+        :param arg:
         """
         pass
 
 
 # Test class keyword
 #-------------------------------------------------------------------------------
-
-
 Given python (class Foo no extends):
     class Foo:
         pass
 
 Execute:
-    Pydocstring
+    :Pydocstring
+    :sleep 500m
 
 Expect python:
     class Foo:
-        """Foo"""
+        """Foo."""
+
         pass
 
 Given python (class Foo extends multiple classes):
@@ -98,16 +107,18 @@ Given python (class Foo extends multiple classes):
         pass
 
 Execute:
-    Pydocstring
+    :Pydocstring
+    :sleep 500m
 
 Expect python:
     class Foo(ClassA, ClassB, ClassC):
-        """Foo"""
+        """Foo."""
+
         pass
 
 
 Given python (class Foo):
-    class Foo(object):
+    class Foo:
         def foo(self):
             pass
 
@@ -115,11 +126,13 @@ Given python (class Foo):
             pass
 
 Execute:
-    Pydocstring
+    :Pydocstring
+    :sleep 500m
 
 Expect python:
-    class Foo(object):
-        """Foo"""
+    class Foo:
+        """Foo."""
+
         def foo(self):
             pass
 
@@ -128,7 +141,7 @@ Expect python:
 
 
 Given python (class Foo):
-    class Foo(object):
+    class Foo:
         def foo(self):
             pass
 
@@ -139,12 +152,13 @@ Do (Put cursor to def foo(self)):
     j
 
 Then Execute (Execute Pydocstring on def foo(self)):
-    Pydocstring
+    :Pydocstring
+    :sleep 500m
 
 Expect python:
-    class Foo(object):
+    class Foo:
         def foo(self):
-            """foo"""
+            """foo."""
             pass
 
         def arg1(self, arg1):
@@ -152,7 +166,7 @@ Expect python:
 
 
 Given python (class Foo):
-    class Foo(object):
+    class Foo:
         def foo(self):
             pass
 
@@ -163,15 +177,16 @@ Do (Put cursor to def arg1(self, arg1)):
     4j
 
 Then Execute (Execute Pydocstring on def arg1(self, arg1)):
-    Pydocstring
+    :Pydocstring
+    :sleep 500m
 
 Expect python:
-    class Foo(object):
+    class Foo:
         def foo(self):
             pass
 
         def arg1(self, arg1):
-            """arg1
+            """arg1.
 
             :param arg1:
             """
@@ -184,30 +199,82 @@ Given python (async def foo):
         pass
 
 Execute:
-    Pydocstring
+    :Pydocstring
+    :sleep 500m
 
 Expect python:
     async def foo():
-        """foo"""
+        """foo."""
         pass
 
-# Test issue #28
+# Test type hint
 #-------------------------------------------------------------------------------
-Given python (issue#28):
-  def moment(weights: tuple, coords: numpy.ndarray) -> numpy.ndarray:
-      pass
+Given python (type hint arg):
+    def foo(arg1: str):
+        pass
 
 Execute:
-    Pydocstring
+    :Pydocstring
+    :sleep 500m
 
 Expect python:
-  def moment(weights: tuple, coords: numpy.ndarray) -> numpy.ndarray:
-      """moment
+    def foo(arg1: str):
+        """foo.
 
-      :param weights:
-      :type weights: tuple
-      :param coords:
-      :type coords: numpy.ndarray
-      :rtype: numpy.ndarray
-      """
-      pass
+        :param arg1:
+        :type arg1: str
+        """
+        pass
+
+Given python (type hint args):
+    def foo(arg1: str, arg2: int):
+        pass
+
+Execute:
+    :Pydocstring
+    :sleep 500m
+
+Expect python:
+    def foo(arg1: str, arg2: int):
+        """foo.
+
+        :param arg1:
+        :type arg1: str
+        :param arg2:
+        :type arg2: int
+        """
+        pass
+
+Given python (return type hint):
+    def foo() -> str:
+        pass
+
+Execute:
+    :Pydocstring
+    :sleep 500m
+
+Expect python:
+    def foo() -> str:
+        """foo.
+
+        :rtype: str
+        """
+        pass
+
+Given python (type hint and return type hint):
+    def foo(arg1: str) -> str:
+        pass
+
+Execute:
+    :Pydocstring
+    :sleep 500m
+
+Expect python:
+    def foo(arg1: str) -> str:
+        """foo.
+
+        :param arg1:
+        :type arg1: str
+        :rtype: str
+        """
+        pass

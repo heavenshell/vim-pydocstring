@@ -1,6 +1,0 @@
-"""{{_header_}}
-
-{{_args_}}:{{_lf_}}{{_indent_}}    the ...
-
-return ({{_return_type_}}):
-"""

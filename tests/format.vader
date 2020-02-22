@@ -1,0 +1,41 @@
+# vim:set et sw=4 ts=4 tw=79:
+
+Execute (Setup template dir):
+    Save g:pydocstring_formatter
+    let g:pydocstring_formatter = 'sphinx'
+
+# Format all
+#-------------------------------------------------------------------------------
+Given python (Format all):
+    class Foo:
+        def foo(arg1):
+            pass
+
+
+        def bar(arg1, arg2):
+            pass
+
+
+Execute:
+    :PydocstringFormat
+    :sleep 500m
+
+Expect python:
+    class Foo:
+        """Foo."""
+
+        def foo(arg1):
+            """foo.
+
+            :param arg1:
+            """
+            pass
+
+
+        def bar(arg1, arg2):
+            """bar.
+
+            :param arg1:
+            :param arg2:
+            """
+            pass
