@@ -13,6 +13,8 @@ install:
   - make && make install
   - git clone https://github.com/junegunn/vader.vim.git
   - export VIM_EXE=$HOME/tmp/vim/bin/vim
+  - apt-get install python3
+  - apt-get install python3-venv
   - cd $HOME/build/heavenshell/vim-pydocstring
   - make install
 
