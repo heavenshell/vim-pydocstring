@@ -1,0 +1,58 @@
+# vim:set et sw=4 ts=4 tw=79:
+
+Execute (Setup template dir):
+    Save g:pydocstring_templates_path
+    let g:pydocstring_templates_path = './templates'
+
+Given python (def foo):
+    def foo():
+        pass
+
+Execute:
+    :Pydocstring
+    :sleep 1
+
+Expect python:
+    def foo():
+        """Summary of foo.
+        """
+        pass
+
+Given python (def foo with 1 param):
+    def foo(arg):
+        pass
+
+Execute:
+    :Pydocstring
+    :sleep 500m
+
+Expect python:
+    def foo(arg):
+        """Summary of foo.
+
+        Args:
+            arg: Description of arg.
+        """
+        pass
+
+Given python (def foo with 2 params and type hints):
+    def foo(arg1: str, arg2: int) -> int:
+        pass
+
+Execute:
+    :Pydocstring
+    :sleep 500m
+
+Expect python:
+    def foo(arg1: str, arg2: int) -> int:
+        """Summary of foo.
+
+        Args:
+            arg1 (str): Description of arg1.
+            arg2 (int): Description of arg2.
+
+        Returns:
+            int: Description of return value.
+        """
+        pass
+

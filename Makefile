@@ -4,4 +4,4 @@ install:
 
 .PHONY: clean
 clean:
-	rm -rf lib/venv lib/doq
+	rm -rf lib/doq lib/venv

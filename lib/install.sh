@@ -3,11 +3,13 @@
 set -e
 
 if [ ! -v $VIRTUAL_ENV ]; then
-  echo 'You already in virtualenv. deactivate first.'
+  echo "You already in virtualenv. deactivate first."
   exit 1
 fi
 
-python3 -m venv ./venv
-./venv/bin/pip3 install -U pip
-./venv/bin/pip3 install doq
-ln -s "./venv/bin/doq" .
+LIBDIR=$(cd $(dirname $0); pwd)
+
+python3 -m venv ${LIBDIR}/venv
+$LIBDIR/venv/bin/pip3 install -U pip
+$LIBDIR/venv/bin/pip3 install doq
+ln -s "${LIBDIR}/venv/bin/doq" "${LIBDIR}/doq"

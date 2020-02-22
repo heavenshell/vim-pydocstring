@@ -1,6 +1,6 @@
 *pydocstring.txt*	Generate Python docstring to your Python code.
 
-Version: 1.0.0
+Version: 2.0.0
 Author: Shinya Ohynagi <sohyanagi@gmail.com>
 Repository: http://github.com/heavenshell/vim-pydocstring/
 License: BSD, see LICENSE for more details.
@@ -13,7 +13,6 @@ Install			|pydocstring-install|
 Tutorial		|pydocstring-tutorial|
 Template		|pydocstring-template|
 Variables		|pydocstring-variables|
-Example			||pydocstring-example|
 
 ==============================================================================
 INTRODUCTION					*pydocstring-vim-introduction*
@@ -22,7 +21,6 @@ INTRODUCTION					*pydocstring-vim-introduction*
 
  * Insert one-line docstring.
  * Insert multi-line docstring.
- * Insert comment.
 
 This plugin is heavily inspired by phpdoc.vim and sonictemplate.vim.
 - phpdoc.vim
@@ -39,6 +37,19 @@ Install the distributed files into Vim runtime directory which is usually
 If you install pathogen that provided from Tim Pope, you should extract the
 file into 'bundle' directory.
 
+Pydocstring v2 is support only Vim8 and depends on `doq`.
+
+Install `doq` first.
+>
+  $ make install
+>
+If you want install `doq` manually, you can install from `PyPi`.
+>
+  $ python3 -m venv ./venv
+  $ ./venv/bin/pip3 install doq
+<
+Than set installed `doq` path to |g:pydocstring_doq_path|.
+
 ==============================================================================
 TUTORIAL					*pydocstring-vim-tutorial*
 
@@ -46,7 +57,7 @@ TUTORIAL					*pydocstring-vim-tutorial*
   Define function to your code.
 >
   def foo(arg1, arg2):
-    pass
+      pass
 <
   Set cursor on `def` line and type following.
 >
@@ -55,23 +66,23 @@ TUTORIAL					*pydocstring-vim-tutorial*
   Then docstring put under `def` line.
 >
   def foo(arg1, arg2):
-    """foo
+      """foo.
 
-    :param arg1:
-    :param arg2:
-    """
-    pass
+      :param arg1:
+      :param arg2:
+      """
+      pass
 <
 
 2. class keyword.
   Define class to your code.
 >
   class Foo(object):
-    def foo(self):
-      pass
+      def foo(self):
+          pass
 
-    def arg1(self, arg1):
-      pass
+      def arg1(self, arg1):
+          pass
 <
   Set cursor on `class` line and type following.
 >
@@ -80,12 +91,13 @@ TUTORIAL					*pydocstring-vim-tutorial*
   Then one-line docstring put under `class` line.
 >
   class Foo(object):
-    """Foo"""
-    def foo(self):
-      pass
+      """Foo."""
 
-    def arg1(self, arg1):
-      pass
+      def foo(self):
+          pass
+
+      def bar(self, arg1):
+          pass
 <
   Set cursor on `def foo` line and type following.
 >
@@ -94,84 +106,91 @@ TUTORIAL					*pydocstring-vim-tutorial*
   Then one-line docstring put under `def foo` line.
 >
   class Foo(object):
-    """Foo"""
-    def foo(self):
-      """foo"""
-      pass
-    def arg1(self, arg1):
-      pass
+      """Foo."""
+
+      def foo(self):
+          """foo."""
+          pass
+
+      def bar(self, arg1):
+          pass
 <
-  Set cursor on `def arg1` line and type following.
+  Set cursor on `def bar` line and type following.
 >
   :Pydocstring
 <
-  Then one-line docstring put under `def arg1` line.
+  Then one-line docstring put under `def bar` line.
 >
   class Foo(object):
-    """Foo"""
-    def foo(self):
-      """foo"""
-      pass
-    def arg1(self, arg1):
-      """arg1
+      """Foo."""
 
-      :param arg1:
-      pass
+      def foo(self):
+          """foo."""
+          pass
+
+      def bar(self, arg1):
+        """bar.
+
+        :param arg1:
+        """
+        pass
 <
+3. Visual select format
+>
+  class Foo(object):
+      def foo(self):
+          pass
+
+      def bar(self, arg1):
+        pass
+<
+  Visual select `v3j` and type following
+>
+  :'<,'>Pydocstring
+<
+
+  Then docstrings put under `class Foo(object):` and `def bar` line.
+>
+  class Foo(object):
+      """Foo."""
+
+      def foo(self):
+          """foo."""
+          pass
+
+4. Format current buffer
+
+  type following
+>
+  :PydocstringFormat
+<
+  Then docstrings will put under class, def keywords.
 
 ==============================================================================
 TEMPLATE					*pydocstring-vim-template*
 
 If you don't like default docstring, You can modify docstring template.
 >
-  let g:pydocstring_templates_dir = '/path/to/your/template/directory'
+  let g:pydocstring_templates_path = '/path/to/your/template/directory'
 <
-- comment.txt
-  Comment.
-- oneline.txt
-  One-line docstring.
-- multi.txt
-  Multi-line docstring.
-- arg.txt
-  Template for each argument.
+You can create custom template.
+See `tests/templates' for example.
 
-Template variables.
-  |{{_header_}}|	Class, function or method name as a value.
-  |{{_args_}}|		Assign function or method's arguments.
-  |{{_lf_}}|		Assign line break.
-  |{{_indent_}}|	Assign indent.
-  |{{_nested_indent_}}|	Assign indent.
-  |{{_return_type_}}|	Function or method return type.
-  |{{_returnType_}}|	Same as |{{_return_type_}}||.
-  |{{_name_}}|		Argument name, should only be used in `arg.txt`
-  |{{_type_}}|		Argument type, should only be used in `arg.txt`
-
-There's some rules for parsing template:
-- `{{_header_}`, `{{_args}}` and `{{_return_type_}}` should be on their own
-  line.
-- Pydocstring will insert a emmpty line between each parts, so you don't
-  need to include empty line in your template. Please see the default template
-  directory to have an example.
 ==============================================================================
 VARIABLES					*pydocstring-vim-variables*
 
-g:pydocstring_templates_dir			*g:pydocstring_templates_dir*
-		Path to your own template file.
+pydocstring_formatter				*g:pydocstring_formatter*
+		Formatter option.
+		'sphinx', 'google', 'numpy'
+		Default value is 'sphinx'
 
+g:pydocstring_templates_path			*g:pydocstring_templates_dir*
+		Path to your own template file.
 		Refer template/pydocstring/ about the default value.
 
-g:pydocstring_ignore_args_pattern		*g:pydocstring_ignore_args_pattern*
-		Usually Python's method need self keyword at first argument.
-		But in docstring, you don't need to write it.
-		This option set ignore regex pattern.
-
-		Default value is 'self\|cls'
-
-g:pydocstring_enable_comment			*g:pydocstring_enable_comment*
-		If you execute :Pydocstring at no `def`, `class` line.
-		g:pydocstring_enable_comment enable to put comment.txt value.
-
-		Default value is '1'
+g:pydocstring_doq_path				*g:pydocstring_doq_path*
+		Path to doq command.
+		Default value is 'lib/doq'
 
 g:pydocstring_enable_mapping			*g:pydocstring_enable_mapping*
 		Disable this option to prevent pydocstring from creating any
@@ -182,73 +201,6 @@ g:pydocstring_enable_mapping			*g:pydocstring_enable_mapping*
     nmap <silent> <C-m> <Plug>(pydocstring)
 
 		Default value is '1'
-
-==============================================================================
-EXAMPLE						*pydocstring-vim-example*
-
-Numpy style docstring template example.
-
-  Add following template to multi.txt
->
-    """{{_header_}}
-
-    {{_args_}} :{{_lf_}}{{_indent_}}    {{_args_}} is
-    """
-<
-  Set cursor on `def arg1` line and type following.
->
-    :Pydocstring
-<
-  Then docstring put under `def` line.
->
-  def foo(arg1, arg2):
-    """foo
-
-    arg1:
-        arg1 is
-    arg2:
-        arg2 is
-    """
-    pass
-
-Nested indent example.
-
-  Add following template to multi.txt
->
-    """{{_header_}}
-
-    {{_indent_}}Args:
-    {{_nested_indent_}}{{_args_}}:
-    """
-<
-  Set cursor on `def arg1` line and type following.
->
-    :Pydocstring
-<
-  Then docstring put under `def` line.
->
-  class Foo(object):
-    def foo(self, arg1, arg2):
-        """foo
-
-        Args:
-            arg1:
-            arg2:
-        """
-        pass
-<
-
-Override default mapping.
-
-  Add following setting to your .vimrc or _vimrc.
-  Following setting map <C-m> to generate docstring.
-
-    nmap <silent> <C-m> <Plug>(pydocstring)
-
-  To disable mappings entirely, add the following to your .vimrc or _vimrc.
-
-    let g:pydocstring_enable_mapping = 0
-
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:fdl=0:
