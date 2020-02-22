@@ -148,6 +148,36 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+
+### https://raw.github.com/github/gitignore/85bf08b19a77c62d7b6286c2db8811f2ff373b0f/Global/macOS.gitignore
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
 # App
 doq
 vader.vim/
