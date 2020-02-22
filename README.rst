@@ -85,4 +85,4 @@ Thanks
 ------
 
 The idea of venv installation is from `vim-lsp-settings <https://github.com/mattn/vim-lsp-settings>`_.
-Highly applicate @mattn and all vim-lsp-settings contributors.
+Highly applicate `@mattn <https://github.com/mattn/>`_ and all vim-lsp-settings contributors.
