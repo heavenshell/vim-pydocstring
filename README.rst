@@ -80,3 +80,9 @@ You can set custom template
 .. code::
 
   let g:pydocstring_template_path = '/path/to/custom/templates'
+
+Thanks
+------
+
+The idea of venv installation is from `vim-lsp-settings <https://github.com/mattn/vim-lsp-settings>`_.
+Highly applicate @mattn and all vim-lsp-settings contributors.
