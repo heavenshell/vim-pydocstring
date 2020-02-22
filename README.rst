@@ -31,7 +31,7 @@ If you want install doq manually, you can install from PyPi.
   $ python3 -m venv ./venv
   $ ./venv/bin/pip3 install doq
 
-Than set installed `doq <https://pypi.org/project/doq/>`_. path to `g:pydocstring_doq_path`.
+Than set installed `doq <https://pypi.org/project/doq/>`_ path to `g:pydocstring_doq_path`.
 
 
 Note
