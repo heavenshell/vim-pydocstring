@@ -20,4 +20,4 @@ template: |
 
   ## Compare
 
-  https://github.com/heavenshell/ts-react-boilerplate/compare/$PREVIOUS_TAG...$NEXT_PATCH_VERSION
+  https://github.com/heavenshell/vim-pydocstring/compare/$PREVIOUS_TAG...$NEXT_PATCH_VERSION
