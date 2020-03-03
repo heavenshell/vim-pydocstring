@@ -9,7 +9,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " version check
-if !has('channel') || !has('job')
+if !has('nvim') && (!has('channel') || !has('job'))
   echoerr '+channel and +job are required for pydocstring.vim'
   finish
 endif
