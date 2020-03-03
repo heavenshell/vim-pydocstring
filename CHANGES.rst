@@ -1,3 +1,21 @@
+Version 2.1.0
+-------------
+Released on Mar 3rd 2020
+
+- Bug fix
+
+  - Emits error only if in vim
+
+  see https://github.com/heavenshell/vim-pydocstring/pull/72
+
+  Thx @nkakouros
+
+Version 2.0.0
+-------------
+Released on Feb 22th 2020
+
+Version 2.0.0
+
 Version 1.0.0
 -------------
 Released on Feb 9th 2020
