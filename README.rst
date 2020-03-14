@@ -81,6 +81,23 @@ You can set custom template
 
   let g:pydocstring_template_path = '/path/to/custom/templates'
 
+Exceptions
+----------
+
+If you want add exceptions to docstring, create custom template
+and visual select source block and hit `:'<,'>Pydocstring` and then 
+excptions add to docstring.
+
+.. code::
+
+def foo():
+    """Summary of foo.
+
+    Raises:
+        Exception:
+    """
+    raise Exception('foo')
+
 Thanks
 ------
 

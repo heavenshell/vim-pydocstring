@@ -168,12 +168,13 @@ function! pydocstring#insert(...) abort
   endif
   call setpos('.', pos)
 
+  let cmd = s:create_cmd('json', 'self,cls')
   let lines = join(getline(start_lineno, end_lineno), "\n")
   if is_not_range
     let lines = printf("%s\n%s%s", lines, indent, 'pass')
+    let cmd = printf('%s --ignore_exception', cmd)
   endif
 
-  let cmd = s:create_cmd('json', 'self,cls')
   call s:execute(
     \ cmd,
     \ lines,
