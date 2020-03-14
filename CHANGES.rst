@@ -1,3 +1,15 @@
+Version 2.2.0
+-------------
+
+Released on Mar 14th 2020
+
+- Add exception feature
+
+  see https://github.com/heavenshell/vim-pydocstring/pull/79
+
+  Thx @JPFrancoia
+
+
 Version 2.1.0
 -------------
 Released on Mar 3rd 2020
