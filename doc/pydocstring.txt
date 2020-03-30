@@ -184,12 +184,12 @@ pydocstring_formatter				*g:pydocstring_formatter*
 		'sphinx', 'google', 'numpy'
 		Default value is 'sphinx'
 
-g:pydocstring_templates_path			*g:pydocstring_templates_dir*
-		Path to your own template file.
+g:pydocstring_templates_path			*g:pydocstring_templates_path*
+		Absolute path to your own template file.
 		Refer template/pydocstring/ about the default value.
 
 g:pydocstring_doq_path				*g:pydocstring_doq_path*
-		Path to doq command.
+		Absolute path to doq command.
 		Default value is 'lib/doq'
 
 g:pydocstring_enable_mapping			*g:pydocstring_enable_mapping*

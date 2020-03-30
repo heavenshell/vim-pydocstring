@@ -72,14 +72,27 @@ If you want change default keymapping, set following to your `.vimrc`.
 
   nmap <silent> <C-_> <Plug>(pydocstring)
 
+Foramtter
+---------
+
+You can set built-in formatter(Sphinx, Numpy, Google).
+
+.. code::
+
+  leg g:pydocstring_formatter = 'numpy'
+
+
 Custom template
 ---------------
 
-You can set custom template
+You can set custom template. See `example <https://github.com/heavenshell/py-doq/tree/master/examples>`_.
+
+Path should be absolute path.
 
 .. code::
 
   let g:pydocstring_template_path = '/path/to/custom/templates'
+  let g:pydocstring_template_path = expand('~/path/to/custom/templates')
 
 Exceptions
 ----------
@@ -90,13 +103,13 @@ excptions add to docstring.
 
 .. code::
 
-def foo():
-    """Summary of foo.
+  def foo():
+      """Summary of foo.
 
-    Raises:
-        Exception:
-    """
-    raise Exception('foo')
+      Raises:
+          Exception:
+      """
+      raise Exception('foo')
 
 Thanks
 ------
