@@ -47,6 +47,15 @@ Basic usage
 2. type `:Pydocstring` and
 3. watch a docstring template magically appear below the current line
 
+Foramtter
+---------
+
+You can select built-in formatter(Sphinx, Numpy, Google).
+
+.. code::
+
+  leg g:pydocstring_formatter = 'numpy'
+
 Format all
 ----------
 
@@ -90,13 +99,13 @@ excptions add to docstring.
 
 .. code::
 
-def foo():
-    """Summary of foo.
+  def foo():
+      """Summary of foo.
 
-    Raises:
-        Exception:
-    """
-    raise Exception('foo')
+      Raises:
+          Exception:
+      """
+      raise Exception('foo')
 
 Thanks
 ------
