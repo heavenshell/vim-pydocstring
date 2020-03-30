@@ -78,7 +78,7 @@ function! s:exit_callback(ch, msg) abort
 endfunction
 
 function! s:execute(cmd, lines, indent, start_lineno, cb, ex_cb) abort
-  if !executable(g:pydocstring_doq_path)
+  if !executable(expand(g:pydocstring_doq_path))
     redraw
     echohl Error
     echo '`doq` not found. Install `doq`.'
@@ -106,7 +106,7 @@ function! s:create_cmd(style, omissions) abort
   if a:omissions ==# ''
     let cmd = printf(
       \ '%s --style=%s --formatter=%s --indent=%s',
-      \ g:pydocstring_doq_path,
+      \ expand(g:pydocstring_doq_path),
       \ a:style,
       \ g:pydocstring_formatter,
       \ &softtabstop
@@ -114,7 +114,7 @@ function! s:create_cmd(style, omissions) abort
   else
     let cmd = printf(
       \ '%s --style=%s --formatter=%s --omit=%s --indent=%s',
-      \ g:pydocstring_doq_path,
+      \ expand(g:pydocstring_doq_path),
       \ a:style,
       \ g:pydocstring_formatter,
       \ a:omissions,
