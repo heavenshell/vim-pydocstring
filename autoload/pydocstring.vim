@@ -122,7 +122,7 @@ function! s:create_cmd(style, omissions) abort
       \ )
   endif
   if g:pydocstring_templates_path !=# ''
-    let cmd = printf('%s --template_path=%s', cmd, g:pydocstring_templates_path)
+    let cmd = printf('%s --template_path=%s', cmd, expand(g:pydocstring_templates_path))
   endif
 
   return cmd
