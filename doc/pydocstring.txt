@@ -184,7 +184,7 @@ pydocstring_formatter				*g:pydocstring_formatter*
 		'sphinx', 'google', 'numpy'
 		Default value is 'sphinx'
 
-g:pydocstring_templates_path			*g:pydocstring_templates_dir*
+g:pydocstring_templates_path			*g:pydocstring_templates_path*
 		Path to your own template file.
 		Refer template/pydocstring/ about the default value.
 
