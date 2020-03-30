@@ -1,7 +1,13 @@
 Version 2.2.0
 -------------
 
-Released on Mar 14th 2020
+Released on Mar 31th 2020
+
+- Fix can use relative path
+
+  see https://github.com/heavenshell/vim-pydocstring/issues/82
+
+  Thx @Trashcleaner
 
 - Add exception feature
 
