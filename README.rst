@@ -87,9 +87,12 @@ Custom template
 
 You can set custom template. See `example <https://github.com/heavenshell/py-doq/tree/master/examples>`_.
 
+Path should be absolute path.
+
 .. code::
 
   let g:pydocstring_template_path = '/path/to/custom/templates'
+  let g:pydocstring_template_path = expand('~/path/to/custom/templates')
 
 Exceptions
 ----------
