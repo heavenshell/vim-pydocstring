@@ -47,15 +47,6 @@ Basic usage
 2. type `:Pydocstring` and
 3. watch a docstring template magically appear below the current line
 
-Foramtter
----------
-
-You can select built-in formatter(Sphinx, Numpy, Google).
-
-.. code::
-
-  leg g:pydocstring_formatter = 'numpy'
-
 Format all
 ----------
 
@@ -81,10 +72,20 @@ If you want change default keymapping, set following to your `.vimrc`.
 
   nmap <silent> <C-_> <Plug>(pydocstring)
 
+Foramtter
+---------
+
+You can set built-in formatter(Sphinx, Numpy, Google).
+
+.. code::
+
+  leg g:pydocstring_formatter = 'numpy'
+
+
 Custom template
 ---------------
 
-You can set custom template
+You can set custom template. See `example <https://github.com/heavenshell/py-doq/tree/master/examples>`_.
 
 .. code::
 
