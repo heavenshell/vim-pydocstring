@@ -47,12 +47,13 @@ function! s:insert_docstring(docstrings, end_lineno) abort
   silent! execute 'normal! ' . a:end_lineno . 'G$'
 endfunction
 
-function! s:callback(ch, msg, indent, start_lineno) abort
+function! s:callback(msg, indent, start_lineno) abort
   let docstrings = reverse(json_decode(a:msg))
   silent! execute 'normal! 0'
+  let length = len(docstrings)
   for docstring in docstrings
     let lineno = 0
-    if len(docstrings) > 1
+    if length > 1
       call cursor(a:start_lineno + docstring['start_lineno'] - 1, 1)
       let lineno = search('\:\(\s*#.*\)*$', 'n') + 1
     else
@@ -63,11 +64,11 @@ function! s:callback(ch, msg, indent, start_lineno) abort
   endfor
 endfunction
 
-function! s:format_callback(ch, msg, indent, start_lineno) abort
+function! s:format_callback(msg, indent, start_lineno) abort
   call add(s:results, a:msg)
 endfunction
 
-function! s:exit_callback(ch, msg) abort
+function! s:exit_callback(msg) abort
   if len(s:results)
     let view = winsaveview()
     silent execute '% delete'
@@ -90,8 +91,8 @@ function! s:execute(cmd, lines, indent, start_lineno, cb, ex_cb) abort
   endif
 
   let s:job = job_start(a:cmd, {
-    \ 'callback': {c, m -> a:cb(c, m, a:indent, a:start_lineno)},
-    \ 'exit_cb': {c, m -> a:ex_cb(c, m)},
+    \ 'callback': {_, m -> a:cb(m, a:indent, a:start_lineno)},
+    \ 'exit_cb': {_, m -> a:ex_cb(m)},
     \ 'in_mode': 'nl',
     \ })
 
