@@ -24,6 +24,14 @@ You can install following command.
 
   $ make install
 
+
+This can be automated with vim-plug.
+
+.. code::
+
+  Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
+
+
 If you want install doq manually, you can install from PyPi.
 
 .. code::
@@ -32,7 +40,6 @@ If you want install doq manually, you can install from PyPi.
   $ ./venv/bin/pip3 install doq
 
 Than set installed `doq <https://pypi.org/project/doq/>`_ path to `g:pydocstring_doq_path`.
-
 
 Note
 ~~~~
@@ -79,7 +86,7 @@ You can set built-in formatter(Sphinx, Numpy, Google).
 
 .. code::
 
-  leg g:pydocstring_formatter = 'numpy'
+  let g:pydocstring_formatter = 'numpy'
 
 
 Custom template
