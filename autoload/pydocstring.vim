@@ -86,20 +86,44 @@ function! s:execute(cmd, lines, indent, start_lineno, cb, ex_cb) abort
     echohl None
     return
   endif
-  if exists('s:job') && job_status(s:job) != 'stop'
-    call job_stop(s:job)
-  endif
 
-  let s:job = job_start(a:cmd, {
-    \ 'callback': {_, m -> a:cb(m, a:indent, a:start_lineno)},
-    \ 'exit_cb': {_, m -> a:ex_cb(m)},
-    \ 'in_mode': 'nl',
-    \ })
+  if has('nvim')
+    if exists('s:job')
+      call jobstop(s:job)
+    endif
 
-  let channel = job_getchannel(s:job)
-  if ch_status(channel) ==# 'open'
-    call ch_sendraw(channel, a:lines)
-    call ch_close_in(channel)
+    let s:job = jobstart(a:cmd, {
+      \ 'on_stdout': {_c, m, _e -> a:cb(m, a:indent, a:start_lineno)},
+      \ 'on_stderr': {_c, m, _e -> a:cb(m, a:indent, a:start_lineno)},
+      \ 'on_exit': {_c, m, _e -> a:ex_cb(m)},
+      \ })
+
+    if exists('*chansend')
+      " Neovim >0.3.0
+      call chansend(s:job, a:lines)
+      call chanclose(s:job, 'stdin')
+    else
+      " Legacy API
+      call jobsend(s:job, a:lines)
+      call jobclose(s:job, 'stdin')
+    endif
+
+  else
+    if exists('s:job') && job_status(s:job) != 'stop'
+      call job_stop(s:job)
+    endif
+
+    let s:job = job_start(a:cmd, {
+      \ 'callback': {_, m -> a:cb(m, a:indent, a:start_lineno)},
+      \ 'exit_cb': {_, m -> a:ex_cb(m)},
+      \ 'in_mode': 'nl',
+      \ })
+
+    let channel = job_getchannel(s:job)
+    if ch_status(channel) ==# 'open'
+      call ch_sendraw(channel, a:lines)
+      call ch_close_in(channel)
+    endif
   endif
 endfunction
 
