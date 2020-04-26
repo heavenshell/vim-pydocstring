@@ -1,26 +1,41 @@
-dist: bionic
+sudo: false
+group: travis_latest
 language: vim
 
-install:
-  - pwd
+cache:
+  apt: true
+  ccache: true
+
+before_install:
   - git clone https://github.com/junegunn/vader.vim.git tests/vader.vim
-  - git clone https://github.com/vim/vim /tmp/vim
-  - mkdir ~/tmp
-  - cd /tmp/vim
-  - sudo apt-get install -y gettext libncurses5-dev libacl1-dev libgpm-dev
-  - ./configure --with-features=huge --enable-fail-if-missing --enable-pythoninterp --prefix=$HOME/tmp/vim --disable-gui
-  - make && make install
-  - git clone https://github.com/junegunn/vader.vim.git
-  - export VIM_EXE=$HOME/tmp/vim/bin/vim
   - sudo apt-get install python3
   - sudo apt-get install python3-dev
   - sudo apt-get install python3-venv
-  - cd $HOME/build/heavenshell/vim-pydocstring
-  - make install
 
 before_script:
-  - $HOME/tmp/vim/bin/vim --version
+  - cd $HOME/build/heavenshell/vim-pydocstring
+  - make install
+  - cd $HOME/build/heavenshell/vim-pydocstring/tests
 
-script:
-  - cd tests
-  - ./run.sh
+jobs:
+  include:
+  - env: ENV="Vim8"
+    install:
+      - git clone https://github.com/vim/vim /tmp/vim
+      - mkdir ~/tmp
+      - cd /tmp/vim
+      - sudo apt-get install -y gettext libncurses5-dev libacl1-dev libgpm-dev
+      - ./configure --with-features=huge --enable-fail-if-missing --enable-pythoninterp --prefix=$HOME/tmp/vim --disable-gui
+      - make && make install
+
+    script:
+      - VIM_EXE=$HOME/bin/vim/bin/vim ./run.sh
+
+  - env: ENV="Neovim"
+    install:
+      - mkdir -p ~/tmp/nvim/bin
+      - curl -L https://github.com/neovim/neovim/releases/download/v0.4.3/nvim.appimage -o ~/tmp/nvim/bin/nvim
+      - chmod u+x ~/tmp/nvim/bin/nvim
+
+    script:
+      - VIM_EXE=$HOME/tmp/nvim/bin/nvim ./run.sh
