@@ -29,7 +29,7 @@ jobs:
       - make && make install
 
     script:
-      - VIM_EXE=$HOME/bin/vim/bin/vim ./run.sh
+      - VIM_EXE=$HOME/tmp/vim/bin/vim ./run.sh
 
   - env: ENV="Neovim"
     install:
