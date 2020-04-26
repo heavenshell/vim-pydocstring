@@ -9,10 +9,10 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " version check
-if !has('nvim') && (!has('channel') || !has('job'))
-  echoerr '+channel and +job are required for pydocstring.vim'
-  finish
-endif
+" if !has('nvim') && (!has('channel') || !has('job'))
+"   echoerr '+channel and +job are required for pydocstring.vim'
+"   finish
+" endif
 
 command! -nargs=0 -range=0 -complete=customlist,pydocstring#insert Pydocstring call pydocstring#insert(<q-args>, <count>, <line1>, <line2>)
 command! -nargs=0 -complete=customlist,pydocstring#format PydocstringFormat call pydocstring#format()
