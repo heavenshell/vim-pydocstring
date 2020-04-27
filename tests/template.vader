@@ -1,8 +1,11 @@
 # vim:set et sw=4 ts=4 tw=79:
 
-Execute (Setup template dir):
+Execute (Setup template path):
     Save g:pydocstring_templates_path
     let g:pydocstring_templates_path = './templates'
+
+    Save g:pydocstring_formatter
+    let g:pydocstring_formatter = 'sphinx'
 
 Given python (def foo):
     def foo():
