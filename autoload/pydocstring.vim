@@ -48,7 +48,13 @@ function! s:insert_docstring(docstrings, end_lineno) abort
 endfunction
 
 function! s:callback(msg, indent, start_lineno) abort
-  let docstrings = reverse(json_decode(a:msg))
+  let msg = join(a:msg, '')
+  " Check needed for Neovim
+  if len(msg) == 0
+    return
+  endif
+
+  let docstrings = reverse(json_decode(msg))
   silent! execute 'normal! 0'
   let length = len(docstrings)
   for docstring in docstrings
@@ -65,10 +71,11 @@ function! s:callback(msg, indent, start_lineno) abort
 endfunction
 
 function! s:format_callback(msg, indent, start_lineno) abort
-  call add(s:results, a:msg)
+  call extend(s:results, a:msg)
 endfunction
 
 function! s:exit_callback(msg) abort
+  unlet s:job " Needed for Neovim
   if len(s:results)
     let view = winsaveview()
     silent execute '% delete'
@@ -94,8 +101,8 @@ function! s:execute(cmd, lines, indent, start_lineno, cb, ex_cb) abort
 
     let s:job = jobstart(a:cmd, {
       \ 'on_stdout': {_c, m, _e -> a:cb(m, a:indent, a:start_lineno)},
-      \ 'on_stderr': {_c, m, _e -> a:cb(m, a:indent, a:start_lineno)},
       \ 'on_exit': {_c, m, _e -> a:ex_cb(m)},
+      \ 'stdout_buffered': v:true,
       \ })
 
     if exists('*chansend')
@@ -114,8 +121,8 @@ function! s:execute(cmd, lines, indent, start_lineno, cb, ex_cb) abort
     endif
 
     let s:job = job_start(a:cmd, {
-      \ 'callback': {_, m -> a:cb(m, a:indent, a:start_lineno)},
-      \ 'exit_cb': {_, m -> a:ex_cb(m)},
+      \ 'callback': {_, m -> a:cb([m], a:indent, a:start_lineno)},
+      \ 'exit_cb': {_, m -> a:ex_cb([m])},
       \ 'in_mode': 'nl',
       \ })
 
