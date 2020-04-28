@@ -1,4 +1,4 @@
-pydocstring.vim
+vim-pydocstring
 ===============
 
 .. image:: https://travis-ci.org/heavenshell/vim-pydocstring.svg?branch=master
@@ -6,7 +6,7 @@ pydocstring.vim
 
 .. image:: ./assets/vim-pydocstring.gif
 
-Pydocstring is a generator for Python docstrings and is capable of automatically
+vim-pydocstring is a generator for Python docstrings and is capable of automatically
 
 * inserting one-line docstrings
 * inserting multi-line docstrings
@@ -16,7 +16,7 @@ This plugin is heavily inspired by `phpdoc.vim <http://www.vim.org/scripts/scrip
 Install
 -------
 
-Since version 2, pydocstring requires `doq <https://pypi.org/project/doq/>`_.
+Since version 2, vim-pydocstring requires `doq <https://pypi.org/project/doq/>`_.
 
 You can install following command.
 
@@ -44,7 +44,10 @@ Than set installed `doq <https://pypi.org/project/doq/>`_ path to `g:pydocstring
 Note
 ~~~~
 
-pydocstring is now support only Vim8.
+vim-pydocstring support Vim8.
+
+Neovim works since v2.2.0, but if something wrong, send me pull requests to fix it.
+
 If you want use old version checkout `1.0.0 <https://github.com/heavenshell/vim-pydocstring/releases/tag/1.0.0>`_
 
 Basic usage
