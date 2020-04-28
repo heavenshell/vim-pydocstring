@@ -1,9 +1,24 @@
+Version 2.3.0
+-------------
+
+Released on Apr 28th 2020
+
+- Minor changes
+
+  - Add support for Neovim
+
+  see https://github.com/heavenshell/vim-pydocstring/pull/89
+
+  Thx @brentyi, @nkakouros
+
 Version 2.2.0
 -------------
 
 Released on Mar 31th 2020
 
-- Fix can use relative path
+- Bug fix
+
+  - Fix can use relative path
 
   see https://github.com/heavenshell/vim-pydocstring/issues/82
 
