@@ -1,6 +1,6 @@
 # vim:set et sw=4 ts=4 tw=79:
 
-Execute (Setup template dir):
+Execute (Setup template formatter):
     Save g:pydocstring_formatter
     let g:pydocstring_formatter = 'numpy'
 
