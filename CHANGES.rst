@@ -1,3 +1,16 @@
+Version 2.3.1
+-------------
+
+Released on Apr 30th 2020
+
+- Document fix
+
+  - Add README note regarding vim-plug and venv
+
+  see https://github.com/heavenshell/vim-pydocstring/pull/95
+
+  Thx @acamso
+
 Version 2.3.0
 -------------
 
