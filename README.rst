@@ -25,7 +25,7 @@ You can install following command.
   $ make install
 
 
-This can be automated with vim-plug.
+This can be automated with vim-plug. Activated venv needs to be deactivated before running `PlugInstall` or `PlugUpdate`. 
 
 .. code::
 
@@ -39,7 +39,7 @@ If you want install doq manually, you can install from PyPi.
   $ python3 -m venv ./venv
   $ ./venv/bin/pip3 install doq
 
-Than set installed `doq <https://pypi.org/project/doq/>`_ path to `g:pydocstring_doq_path`.
+Then set installed `doq <https://pypi.org/project/doq/>`_ path to `g:pydocstring_doq_path`.
 
 Note
 ~~~~
