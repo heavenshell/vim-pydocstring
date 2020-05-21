@@ -39,7 +39,11 @@ If you want install doq manually, you can install from PyPi.
   $ python3 -m venv ./venv
   $ ./venv/bin/pip3 install doq
 
-Then set installed `doq <https://pypi.org/project/doq/>`_ path to `g:pydocstring_doq_path`.
+Then set installed `doq <https://pypi.org/project/doq/>`_ path:
+
+.. code::
+    $ which doq
+    g:pydocstring_doq_path
 
 Note
 ~~~~
@@ -82,7 +86,7 @@ If you want change default keymapping, set following to your `.vimrc`.
 
   nmap <silent> <C-_> <Plug>(pydocstring)
 
-Foramtter
+Formatter
 ---------
 
 You can set built-in formatter(Sphinx, Numpy, Google).
