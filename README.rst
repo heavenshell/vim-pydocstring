@@ -42,6 +42,7 @@ If you want install doq manually, you can install from PyPi.
 Then set installed `doq <https://pypi.org/project/doq/>`_ path:
 
 .. code::
+
     $ which doq
     g:pydocstring_doq_path
 
