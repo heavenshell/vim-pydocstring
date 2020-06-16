@@ -104,7 +104,7 @@ You can set custom template. See `example <https://github.com/heavenshell/py-doq
 
 .. code::
 
-  let g:pydocstring_template_path = '/path/to/custom/templates'
+  let g:pydocstring_templates_path = '/path/to/custom/templates'
 
 Exceptions
 ----------
