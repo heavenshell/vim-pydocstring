@@ -94,6 +94,7 @@ function! s:execute(cmd, lines, indent, start_lineno, cb, ex_cb) abort
     return
   endif
 
+  let s:results = []
   if has('nvim')
     if exists('s:job')
       call jobstop(s:job)
