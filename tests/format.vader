@@ -39,3 +39,40 @@ Expect python:
             :param arg2:
             """
             pass
+
+
+Given python (Format all twice):
+    class Foo:
+        def foo(arg1):
+            pass
+
+
+        def bar(arg1, arg2):
+            pass
+
+
+Execute:
+    :PydocstringFormat
+    :sleep 1
+    :PydocstringFormat
+    :sleep 1
+
+Expect python:
+    class Foo:
+        """Foo."""
+
+        def foo(arg1):
+            """foo.
+
+            :param arg1:
+            """
+            pass
+
+
+        def bar(arg1, arg2):
+            """bar.
+
+            :param arg1:
+            :param arg2:
+            """
+            pass
