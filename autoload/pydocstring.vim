@@ -71,9 +71,8 @@ function! s:callback(msg, indent, start_lineno) abort
 endfunction
 
 function! s:format_callback(msg, indent, start_lineno) abort
-  let msg = join(a:msg, '')
-  " Check needed for Neovim
-  if len(msg) == 0
+  " Neovim returns [''] if nothing
+  if len(a:msg) == 1 && a:msg[0] == ''
     return
   endif
 
