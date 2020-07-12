@@ -79,6 +79,7 @@ function! s:exit_callback(msg) abort
   let length = len(s:results)
   if len(length)
     if length == 1 && s:results[0] == ''
+      let s:results = []
       return
     endif
     let view = winsaveview()
