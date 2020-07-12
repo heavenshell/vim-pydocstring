@@ -71,17 +71,16 @@ function! s:callback(msg, indent, start_lineno) abort
 endfunction
 
 function! s:format_callback(msg, indent, start_lineno) abort
-  " Neovim returns [''] if nothing
-  if len(a:msg) == 1 && a:msg[0] == ''
-    return
-  endif
-
   call extend(s:results, a:msg)
 endfunction
 
 function! s:exit_callback(msg) abort
   unlet s:job " Needed for Neovim
-  if len(s:results)
+  let length = len(s:results)
+  if len(length)
+    if length == 1 && s:results[0] == ''
+      return
+    endif
     let view = winsaveview()
     silent execute '% delete'
     call setline(1, s:results)
