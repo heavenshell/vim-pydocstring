@@ -77,7 +77,11 @@ endfunction
 function! s:exit_callback(msg) abort
   unlet s:job " Needed for Neovim
   let length = len(s:results)
-  if length > 0 || s:results != []
+  if length
+    if length == 1 && s:results == ''
+      let s:results = []
+      return
+    endif
     let view = winsaveview()
     silent execute '% delete'
     call setline(1, s:results)
