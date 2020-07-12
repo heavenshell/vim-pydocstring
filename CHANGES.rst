@@ -1,3 +1,16 @@
+Version 2.3.2
+-------------
+
+Released on Jul 12th 2020
+
+- Bug fix
+
+  - PydocstringFormat deletes file contents if docstrings already present
+
+  see https://github.com/heavenshell/vim-pydocstring/pull/105
+
+  Thx @jrwrigh @edkirk30
+
 Version 2.3.1
 -------------
 
