@@ -78,7 +78,7 @@ function! s:exit_callback(msg) abort
   unlet s:job " Needed for Neovim
   let length = len(s:results)
   if length
-    if length == 1 && s:results == ''
+    if length == 1 && s:results[0] == ''
       let s:results = []
       return
     endif
