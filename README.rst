@@ -1,8 +1,8 @@
 vim-pydocstring
 ===============
 
-.. image:: https://travis-ci.org/heavenshell/vim-pydocstring.svg?branch=master
-  :target: https://travis-ci.org/heavenshell/vim-pydocstring
+.. image:: https://github.com/heavenshell/vim-pydocstring/workflows/build/badge.svg?branch=master
+  :target: https://github.com/heavenshell/vim-pydocstring
 
 .. image:: ./assets/vim-pydocstring.gif
 
