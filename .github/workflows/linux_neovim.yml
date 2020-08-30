@@ -26,6 +26,7 @@ jobs:
         shell: bash
         run: |
           git clone --depth 1 --single-branch https://github.com/junegunn/vader.vim.git ./tests/vader.vim
+          make install
 
       - name: Run tests
         shell: bash
