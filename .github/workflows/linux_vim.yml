@@ -17,6 +17,8 @@ jobs:
     runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        python-version: '3.x'
       - name: Download vim
         shell: bash
         run: |
