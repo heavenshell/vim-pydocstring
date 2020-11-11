@@ -1,3 +1,14 @@
+Version 2.3.3
+-------------
+
+Released on Nov 11th 2020
+
+- Add support for smarttab / shiftwidth
+
+  see https://github.com/heavenshell/vim-pydocstring/pull/110
+
+  Thx @brentyi
+
 Version 2.3.2
 -------------
 
