@@ -69,10 +69,16 @@ type `:PydocstringFormat` will insert all docstrings to current buffer.
 
 Settings
 --------
-Pydocstring depends on ``softtabstop``.
-You need to set like ``set softtabstop=4``.
+Pydocstring depends on ``shiftwidth`` if ``smarttab`` is set, otherwise
+``softtabstop``.  For the latter, you need to set like ``set softtabstop=4``.
 
 Example ``.vimrc``
+
+.. code::
+
+  autocmd FileType python setlocal tabstop=4 shiftwidth=4 smarttab expandtab
+
+Or:
 
 .. code::
 

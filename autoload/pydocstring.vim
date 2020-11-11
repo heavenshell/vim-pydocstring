@@ -18,6 +18,11 @@ let g:pydocstring_doq_path = get(
 
 let s:results = []
 
+function! s:get_indent_width() abort
+  " Get indentation width
+  return &smarttab ? &shiftwidth : &softtabstop
+endfunction
+
 function! s:get_range() abort
   " Get visual mode selection.
   let mode = visualmode(1)
@@ -147,7 +152,7 @@ function! s:create_cmd(style, omissions) abort
       \ expand(g:pydocstring_doq_path),
       \ a:style,
       \ g:pydocstring_formatter,
-      \ &softtabstop
+      \ s:get_indent_width()
       \ )
   else
     let cmd = printf(
@@ -156,7 +161,7 @@ function! s:create_cmd(style, omissions) abort
       \ a:style,
       \ g:pydocstring_formatter,
       \ a:omissions,
-      \ &softtabstop
+      \ s:get_indent_width()
       \ )
   endif
   if g:pydocstring_templates_path !=# ''
@@ -169,7 +174,7 @@ endfunction
 function! pydocstring#format() abort
   let lines = printf("%s\n", join(getbufline(bufnr('%'), 1, '$'), "\n"))
   let cmd = s:create_cmd('string', '')
-  let indent = &softtabstop
+  let indent = s:get_indent_width()
   let end_lineno = line('.')
   call s:execute(
     \ cmd,
@@ -188,7 +193,7 @@ function! pydocstring#insert(...) abort
   let line = getline('.')
   let indent = matchstr(line, '^\(\s*\)')
 
-  let space = repeat(' ', &softtabstop)
+  let space = repeat(' ', s:get_indent_width())
   let indent = indent . space
   if len(indent) == 0
     let indent = space
