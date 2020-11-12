@@ -1,3 +1,14 @@
+Version 2.3.4
+-------------
+
+Released on Nov 12th 2020
+
+- Add option f and n for ln command
+
+  see https://github.com/heavenshell/vim-pydocstring/pull/112
+
+  Thx @roachsinai
+
 Version 2.3.3
 -------------
 
