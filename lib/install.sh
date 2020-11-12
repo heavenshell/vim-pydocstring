@@ -12,4 +12,4 @@ LIBDIR=$(cd $(dirname $0); pwd)
 python3 -m venv ${LIBDIR}/venv
 $LIBDIR/venv/bin/pip3 install -U pip
 $LIBDIR/venv/bin/pip3 install doq
-ln -s "${LIBDIR}/venv/bin/doq" "${LIBDIR}/doq"
+ln -sfn "${LIBDIR}/venv/bin/doq" "${LIBDIR}/doq"
