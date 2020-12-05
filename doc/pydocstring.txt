@@ -50,8 +50,7 @@ If you want install `doq` manually, you can install from `PyPi`.
 <
 Than set installed `doq` path to |g:pydocstring_doq_path|.
 
-If you using venv or virtualenv, you may deactivate venv/virtualenv first.
-doq will create own venv.
+Activated venv needs to be deactivated before insatll doq.
 
 ==============================================================================
 TUTORIAL					*pydocstring-vim-tutorial*

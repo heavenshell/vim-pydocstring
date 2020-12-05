@@ -27,10 +27,9 @@ You can install following command.
 Note
 ~~~~
 
-If you using venv or virtualenv, you may deactivate venv/virtualenv first.
-doq will create own venv.
+Activated venv needs to be deactivated before insatll doq.
 
-This can be automated with vim-plug. Activated venv needs to be deactivated before running `PlugInstall` or `PlugUpdate`. 
+This can be automated with vim-plug.
 
 .. code::
 
@@ -121,7 +120,7 @@ Exceptions
 ----------
 
 If you want add exceptions to docstring, create custom template
-and visual select source block and hit `:'<,'>Pydocstring` and then 
+and visual select source block and hit `:'<,'>Pydocstring` and then
 excptions add to docstring.
 
 .. code::
