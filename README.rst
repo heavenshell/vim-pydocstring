@@ -24,6 +24,11 @@ You can install following command.
 
   $ make install
 
+Note
+~~~~
+
+If you using venv or virtualenv, you may deactivate venv/virtualenv first.
+doq will create own venv.
 
 This can be automated with vim-plug. Activated venv needs to be deactivated before running `PlugInstall` or `PlugUpdate`. 
 
