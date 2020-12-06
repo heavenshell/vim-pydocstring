@@ -1,3 +1,14 @@
+Version 2.3.7
+-------------
+
+Released on Dec 6th 2020
+
+- Fix PydocstringFormat also fixed
+
+  see https://github.com/heavenshell/vim-pydocstring/issues/123
+
+  Thx @tsuyoshicho
+
 Version 2.3.6
 -------------
 
