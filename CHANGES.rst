@@ -1,3 +1,14 @@
+Version 2.3.6
+-------------
+
+Released on Dec 6th 2020
+
+- Remove unnecessary complete
+
+  see https://github.com/heavenshell/vim-pydocstring/issues/119
+
+  Thx @tsuyoshicho
+
 Version 2.3.5
 -------------
 
