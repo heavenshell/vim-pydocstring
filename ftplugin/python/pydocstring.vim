@@ -14,7 +14,7 @@ if !has('nvim') && (!has('channel') || !has('job'))
   finish
 endif
 
-command! -buffer -nargs=0 -range=0 -complete=customlist,pydocstring#insert Pydocstring call pydocstring#insert(<q-args>, <count>, <line1>, <line2>)
+command! -buffer -nargs=0 -range=0 Pydocstring call pydocstring#insert(<q-args>, <count>, <line1>, <line2>)
 command! -buffer -nargs=0 -complete=customlist,pydocstring#format PydocstringFormat call pydocstring#format()
 
 nnoremap <silent> <buffer> <Plug>(pydocstring) :call pydocstring#insert()<CR>
