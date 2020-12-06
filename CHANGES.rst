@@ -1,3 +1,14 @@
+Version 2.3.5
+-------------
+
+Released on Dec 6th 2020
+
+- Fix buffer local mapping
+
+  see https://github.com/heavenshell/vim-pydocstring/pull/118
+
+  Thx @tsuyoshicho
+
 Version 2.3.4
 -------------
 
