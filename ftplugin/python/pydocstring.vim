@@ -14,17 +14,13 @@ if !has('nvim') && (!has('channel') || !has('job'))
   finish
 endif
 
-command! -nargs=0 -range=0 -complete=customlist,pydocstring#insert Pydocstring call pydocstring#insert(<q-args>, <count>, <line1>, <line2>)
-command! -nargs=0 -complete=customlist,pydocstring#format PydocstringFormat call pydocstring#format()
+command! -buffer -nargs=0 -range=0 -complete=customlist,pydocstring#insert Pydocstring call pydocstring#insert(<q-args>, <count>, <line1>, <line2>)
+command! -buffer -nargs=0 -complete=customlist,pydocstring#format PydocstringFormat call pydocstring#format()
 
-if !exists('g:pydocstring_enable_mapping')
-  let g:pydocstring_enable_mapping = 1
-endif
-
-if g:pydocstring_enable_mapping == 1 || hasmapto('<Plug>(pydocstring)')
-  nnoremap <silent> <buffer> <Plug>(pydocstring) :call pydocstring#insert()<CR>
-  if !hasmapto('<Plug>(pydocstring)')
-    nmap <silent> <C-l> <Plug>(pydocstring)
+nnoremap <silent> <buffer> <Plug>(pydocstring) :call pydocstring#insert()<CR>
+if get(g:, 'pydocstring_enable_mapping', 1)
+  if !hasmapto('<Plug>(pydocstring)', 'n')
+    nmap <silent> <buffer> <C-l> <Plug>(pydocstring)
   endif
 endif
 
