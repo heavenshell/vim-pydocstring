@@ -20,7 +20,7 @@ command! -buffer -nargs=0 PydocstringFormat call pydocstring#format()
 nnoremap <silent> <buffer> <Plug>(pydocstring) :call pydocstring#insert()<CR>
 if get(g:, 'pydocstring_enable_mapping', 1)
   if !hasmapto('<Plug>(pydocstring)', 'n')
-    nmap <silent> <buffer> <C-l> <Plug>(pydocstring)
+    nmap <silent> <buffer> <C-n> <Plug>(pydocstring)
   endif
 endif
 

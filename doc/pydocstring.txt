@@ -202,7 +202,7 @@ g:pydocstring_enable_mapping			*g:pydocstring_enable_mapping*
 
     nmap <silent> <C-m> <Plug>(pydocstring)
 
-		Default value is 'l'
+		Default value is 'n'
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:fdl=0:
