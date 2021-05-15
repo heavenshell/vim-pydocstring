@@ -14,7 +14,6 @@ Given python (Format all):
         def bar(self, arg1, arg2):
             pass
 
-
 Execute:
     :PydocstringFormat
     :sleep 2
@@ -38,7 +37,6 @@ Expect python:
             """
             pass
 
-
 Given python (Format all twice):
     class Foo:
         def foo(self, arg1):
@@ -46,7 +44,6 @@ Given python (Format all twice):
 
         def bar(self, arg1, arg2):
             pass
-
 
 Execute:
     :PydocstringFormat
