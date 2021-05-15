@@ -8,10 +8,10 @@ Execute (Setup template formatter):
 #-------------------------------------------------------------------------------
 Given python (Format all):
     class Foo:
-        def foo(arg1):
+        def foo(self, arg1):
             pass
 
-        def bar(arg1, arg2):
+        def bar(self, arg1, arg2):
             pass
 
 
@@ -23,14 +23,14 @@ Expect python:
     class Foo:
         """Foo."""
 
-        def foo(arg1):
+        def foo(self, arg1):
             """foo.
 
             :param arg1:
             """
             pass
 
-        def bar(arg1, arg2):
+        def bar(self, arg1, arg2):
             """bar.
 
             :param arg1:
@@ -41,10 +41,10 @@ Expect python:
 
 Given python (Format all twice):
     class Foo:
-        def foo(arg1):
+        def foo(self, arg1):
             pass
 
-        def bar(arg1, arg2):
+        def bar(self, arg1, arg2):
             pass
 
 
@@ -58,14 +58,14 @@ Expect python:
     class Foo:
         """Foo."""
 
-        def foo(arg1):
+        def foo(self, arg1):
             """foo.
 
             :param arg1:
             """
             pass
 
-        def bar(arg1, arg2):
+        def bar(self, arg1, arg2):
             """bar.
 
             :param arg1:
