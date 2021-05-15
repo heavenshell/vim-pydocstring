@@ -12,7 +12,7 @@ jobs:
         include:
           - name: neovim-v04-x64
             os: ubuntu-latest
-            neovim_version: v0.4.3
+            neovim_version: v0.4.4
     runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v2
