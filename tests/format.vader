@@ -17,7 +17,7 @@ Given python (Format all):
 
 Execute:
     :PydocstringFormat
-    :sleep 1
+    :sleep 2
 
 Expect python:
     class Foo:
@@ -50,9 +50,9 @@ Given python (Format all twice):
 
 Execute:
     :PydocstringFormat
-    :sleep 1
+    :sleep 2
     :PydocstringFormat
-    :sleep 1
+    :sleep 2
 
 Expect python:
     class Foo:
