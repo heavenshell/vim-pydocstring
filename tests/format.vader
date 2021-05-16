@@ -74,6 +74,7 @@ Given python (Format all def):
     def foo(arg1):
         pass
 
+
     def bar(arg1, arg2):
         pass
 
@@ -103,6 +104,7 @@ Given python (Format all twice):
         def foo(self, arg1):
             pass
 
+
         def bar(self, arg1, arg2):
             pass
 
@@ -122,6 +124,7 @@ Expect python:
             :param arg1:
             """
             pass
+
 
         def bar(self, arg1, arg2):
             """bar.
