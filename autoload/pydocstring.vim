@@ -89,6 +89,12 @@ function! s:exit_callback(msg) abort
     endif
     let view = winsaveview()
     silent execute '% delete'
+
+    " Hack for Neovima PydocstringFormat
+    " Neovim add blank line to the end of list
+    if has('nvim') && s:results[-1] == ''
+      call remove(s:results, -1)
+    endif
     call setline(1, s:results)
     call winrestview(view)
     let s:results = []
