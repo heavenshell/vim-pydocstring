@@ -1,3 +1,13 @@
+Version 2.4.0
+-------------
+
+Released on Dec 6th 2020
+
+- Remove blank line at Neovim
+
+  Neovim add blank line to the end of file when PydocstringFormat executed.
+  This behavior is not expected and fix as Vim's behavior.
+
 Version 2.3.7
 -------------
 
