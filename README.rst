@@ -33,8 +33,7 @@ This can be automated with vim-plug.
 
 .. code::
 
-  Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
-
+  Plug 'heavenshell/vim-pydocstring', { 'do': 'make install', 'for': 'python' }
 
 If you want install doq manually, you can install from PyPi.
 
@@ -47,8 +46,8 @@ Then set installed `doq <https://pypi.org/project/doq/>`_ path:
 
 .. code::
 
-    $ which doq
-    g:pydocstring_doq_path
+  $ which doq
+  let g:pydocstring_doq_path = path/to/doq
 
 Note
 ~~~~
@@ -73,6 +72,7 @@ type `:PydocstringFormat` will insert all docstrings to current buffer.
 
 Settings
 --------
+
 Pydocstring depends on ``shiftwidth`` if ``smarttab`` is set, otherwise
 ``softtabstop``.  For the latter, you need to set like ``set softtabstop=4``.
 
@@ -87,6 +87,8 @@ Or:
 .. code::
 
   autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+
+Pydocstring use ftplugin, so `filetype plugin on` required.
 
 Key map
 -------
