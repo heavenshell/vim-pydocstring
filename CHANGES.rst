@@ -1,3 +1,12 @@
+Version 2.5.0
+-------------
+
+Released on Aug 22th 2020
+
+- Add ignore_init option
+
+  see https://github.com/heavenshell/py-doq/releases/tag/0.8.0
+
 Version 2.4.0
 -------------
 
