@@ -135,6 +135,15 @@ excptions add to docstring.
       """
       raise Exception('foo')
 
+Ignore generate __init__ docstring
+----------------------------------
+
+If you want ignore to generate `__init__` docstring, you can set like following.
+
+.. code::
+
+  let g:pydocstring_ignore_init = 1
+
 Thanks
 ------
 

@@ -15,6 +15,7 @@ let g:pydocstring_doq_path = get(
   \ 'pydocstring_doq_path',
   \ printf('%s/lib/doq', expand('<sfile>:p:h:h'))
   \ )
+let g:pydocstring_ignore_init = get(g:, 'pydocstring_ignore_init', 0)
 
 let s:results = []
 
@@ -180,6 +181,8 @@ endfunction
 function! pydocstring#format() abort
   let lines = printf("%s\n", join(getbufline(bufnr('%'), 1, '$'), "\n"))
   let cmd = s:create_cmd('string', '')
+  let cmd = g:pydocstring_ignore_init ? printf('%s --ignore_init', cmd) : cmd
+
   let indent = s:get_indent_width()
   let end_lineno = line('.')
   call s:execute(
