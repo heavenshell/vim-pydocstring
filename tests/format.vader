@@ -76,3 +76,42 @@ Expect python:
             :param arg2:
             """
             pass
+
+Given python (Ignore __init__):
+    class Foo:
+        def __init__(self, arg1):
+            pass
+
+        def foo(arg1):
+            pass
+
+        def bar(arg1, arg2):
+            pass
+
+
+Execute:
+    :let g:pydocstring_ignore_init = 1
+    :PydocstringFormat
+    :sleep 1
+
+Expect python:
+    class Foo:
+        """Foo."""
+
+        def __init__(self, arg1):
+            pass
+
+        def foo(arg1):
+            """foo.
+
+            :param arg1:
+            """
+            pass
+
+        def bar(arg1, arg2):
+            """bar.
+
+            :param arg1:
+            :param arg2:
+            """
+            pass
