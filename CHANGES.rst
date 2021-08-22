@@ -1,7 +1,7 @@
 Version 2.5.0
 -------------
 
-Released on Dec 6th 2020
+Released on Aug 22th 2020
 
 - Add ignore_init option
 
