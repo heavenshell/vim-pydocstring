@@ -1,7 +1,7 @@
 " File:     pydocstring.vim
 " Author:   Shinya Ohyanagi <sohyanagi@gmail.com>
 " Version:  2.5.0
-" WebPage:  http://github.com/heavenshell/vim-pydocstriong/
+" WebPage:  http://github.com/heavenshell/vim-pydocstring/
 " Description: Generate Python docstring to your Python script file.
 " License: BSD, see LICENSE for more details.
 
