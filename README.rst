@@ -99,6 +99,12 @@ If you want change default keymapping, set following to your `.vimrc`.
 
   nmap <silent> <C-_> <Plug>(pydocstring)
 
+Or, if you want disable default keymapping, you can set like following.
+
+.. code::
+
+  let g:pydocstring_enable_mapping = 0
+
 Formatter
 ---------
 
