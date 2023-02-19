@@ -8,13 +8,19 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        name: [neovim-v05-x64]
+        name: [neovim-v08-x64]
         include:
-          - name: neovim-v05-x64
+          - name: neovim-v08-x64
             os: ubuntu-latest
-            neovim_version: v0.5.0
+            neovim_version: v0.8.1
     runs-on: ${{matrix.os}}
     steps:
+      - name: Initialization
+        run: |
+          sudo apt-get update
+          # libfuse2 and LD_PRELOAD are needed for appimage.
+          sudo apt-get -y install libfuse2
+          echo "LD_PRELOAD=/lib/x86_64-linux-gnu/libgmodule-2.0.so" >> $GITHUB_ENV
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
