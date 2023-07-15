@@ -27,7 +27,7 @@ You can install following command.
 Note
 ~~~~
 
-Activated venv needs to be deactivated before insatll doq.
+Activated venv needs to be deactivated before install doq.
 
 This can be automated with vim-plug.
 
